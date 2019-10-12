@@ -28,8 +28,18 @@
   background: rgba(47, 49, 62, 0.2);
   display: flex;
   justify-content: center;
-  padding: 50px;
+  padding: 30px;
   color: grey;
+  text-align: center;
+  font-size: 0.8em;
+}
+
+.navbar_main a {
+  color: grey;
+}
+
+.navbar_main a:hover {
+  color: rgb(194, 194, 194);
 }
 
 .history {
@@ -70,6 +80,24 @@
 .history_main {
   height: 92vh;
   background: rgba(47, 49, 62, 0.98);
-  padding: 20px;
   color: grey;
+}
+
+.scrollbar-vertical {
+  background-color: grey;
+}
+
+.icon {
+  color: grey;
+  margin: 0 auto;
+  display: block !important;
+}
+
+.sign_out {
+  transform: translateY(-50%);
+  /* display: inline-block; */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
