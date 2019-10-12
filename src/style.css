@@ -1,0 +1,75 @@
+.navbar_left,
+.main,
+.history {
+  padding: 0 !important;
+}
+
+.test {
+  height: 100vh;
+  background-image: url("./new_york.jpg");
+}
+
+.navbar_left {
+  background: #2f313e;
+}
+
+.navbar_top {
+  height: 8vh;
+  background: rgba(138, 138, 143, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2em;
+}
+
+.navbar_main {
+  height: 92vh;
+  background: rgba(47, 49, 62, 0.2);
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+  color: grey;
+}
+
+.history {
+  height: 100vh;
+}
+
+.main {
+  height: 100vh;
+}
+
+.history_top {
+  height: 8vh;
+  background: rgba(47, 49, 62, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2em;
+}
+
+.main_top {
+  height: 8vh;
+  background: rgba(134, 54, 168, 0.8);
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  color: white;
+  font-size: 1em;
+  padding-left: 20px;
+}
+
+.main_main {
+  height: 92vh;
+  background: rgba(134, 54, 168, 0.98);
+  padding: 20px;
+}
+
+.history_main {
+  height: 92vh;
+  background: rgba(47, 49, 62, 0.98);
+  padding: 20px;
+  color: grey;
+}

@@ -1,25 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+// Style
+import "./style.css";
+// React bootstrap stylesheet
+import { Container, Row, Col } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+const layout = "second";
 
 function App() {
+  if (layout === "first") {
+    return (
+      <div>
+        <h1>When user not Logged in</h1>
+      </div>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container fluid>
+      <Row className="test">
+        <Col className="navbar_left" md={1}>
+          <div className="navbar_top">LOGA</div>
+          <div className="navbar_main">NAVBAR</div>
+          Left
+        </Col>
+        <Col className="main" md={9}>
+          <div className="main_top">hmmeli hummm hummmmmmmm</div>
+          <div className="main_main">en massa skit här sen!!!</div>
+        </Col>
+        <Col className="history" md={2}>
+          <div className="history_top">History</div>
+          <div className="history_main">olika historiker</div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
