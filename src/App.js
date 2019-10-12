@@ -16,6 +16,7 @@ import AutorenewIcon from "@material-ui/icons/Autorenew";
 import AddToQueueIcon from "@material-ui/icons/AddToQueue";
 import RemoveFromQueueIcon from "@material-ui/icons/RemoveFromQueue";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import AllInclusiveIcon from "@material-ui/icons/AllInclusive";
 
 const layout = "second";
 
@@ -32,7 +33,9 @@ function App() {
     <Container fluid>
       <Row className="test">
         <Col className="navbar_left" md={1}>
-          <div className="navbar_top">LOGA</div>
+          <div className="navbar_top">
+            <AllInclusiveIcon fontSize="large" className="icon_logo" />
+          </div>
           <div className="navbar_main">
             <Nav defaultActiveKey="/home" className="flex-column">
               <Nav.Link href="/home">

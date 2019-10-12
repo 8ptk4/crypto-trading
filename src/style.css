@@ -81,6 +81,7 @@
   height: 92vh;
   background: rgba(47, 49, 62, 0.98);
   color: grey;
+  overflow: hidden;
 }
 
 .scrollbar-vertical {
@@ -93,9 +94,31 @@
   display: block !important;
 }
 
+.icon_logo {
+  color: #24252b;
+  fill: #ffffff;
+  stroke: rgba(134, 54, 168, 0.98);
+  stroke-width: 0.8;
+  transform: scale(2.3);
+}
+
+.icon_logo path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: dash 30s linear alternate infinite;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 .sign_out {
   transform: translateY(-50%);
-  /* display: inline-block; */
   position: absolute;
   bottom: 0;
   left: 0;
