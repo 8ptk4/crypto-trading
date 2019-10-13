@@ -3,5 +3,6 @@
     "activityBar.background": "#162C5B",
     "titleBar.activeBackground": "#1F3D7F",
     "titleBar.activeForeground": "#F9FBFE"
-  }
+  },
+  "editor.fontFamily": "'Fira Code','Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'"
 }

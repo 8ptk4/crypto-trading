@@ -13,6 +13,36 @@
   background: #2f313e;
 }
 
+.landing_page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2f303e;
+}
+
+.landing_page_right {
+  transform: scale(10);
+  color: #292a36;
+}
+
+.landing_page_left {
+  color: #57575f;
+  text-shadow: -1px -1px 0 #292a36, 1px -1px 0 #292a36, -1px 1px 0 #292a36,
+    1px 1px 0 #292a36;
+}
+
+.primary_button {
+  margin-right: 30px !important;
+}
+
+.secondary_button {
+  background: rgb(45, 143, 45) !important;
+}
+.secondary_button:hover {
+  background: rgb(24, 88, 24) !important;
+}
+
 .navbar_top {
   height: 8vh;
   background: rgba(138, 138, 143, 0.2);
@@ -48,6 +78,10 @@
 
 .main {
   height: 100vh;
+}
+
+.center {
+  text-align: center;
 }
 
 .history_top {
