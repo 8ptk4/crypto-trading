@@ -1,5 +1,8 @@
 import React from "react";
 
+// Router
+import Router from "./components/router/Router";
+
 // Style
 import "./style.css";
 import { Scrollbars } from "react-custom-scrollbars";
@@ -37,27 +40,27 @@ function App() {
             <AllInclusiveIcon fontSize="large" className="icon_logo" />
           </div>
           <div className="navbar_main">
-            <Nav defaultActiveKey="/home" className="flex-column">
-              <Nav.Link href="/home">
+            <Nav defaultActiveKey="/" className="flex-column">
+              <Nav.Link href="/">
                 <HomeOutlinedIcon fontSize="large" className="icon" />
                 HOME
               </Nav.Link>
-              <Nav.Link eventKey="link-1">
+              <Nav.Link href="/wallet" eventKey="link-1">
                 <AccountBalanceWalletOutlinedIcon
                   fontSize="large"
                   className="icon"
                 />
                 WALLET
               </Nav.Link>
-              <Nav.Link eventKey="link-2">
+              <Nav.Link href="/trade" eventKey="link-2">
                 <AutorenewIcon fontSize="large" className="icon" />
                 TRADE
               </Nav.Link>
-              <Nav.Link eventKey="link-2">
+              <Nav.Link href="/deposit" eventKey="link-2">
                 <AddToQueueIcon fontSize="large" className="icon" />
                 DEPOSIT
               </Nav.Link>
-              <Nav.Link eventKey="link-2">
+              <Nav.Link href="/withdraw" eventKey="link-2">
                 <RemoveFromQueueIcon fontSize="large" className="icon" />
                 WITHDRAW
               </Nav.Link>
@@ -68,10 +71,7 @@ function App() {
             </Nav>
           </div>
         </Col>
-        <Col className="main" md={9}>
-          <div className="main_top">hmmeli hummm hummmmmmmm</div>
-          <div className="main_main">en massa skit här sen!!!</div>
-        </Col>
+        <Router></Router>
         <Col className="history" md={2}>
           <div className="history_top">History</div>
           <div className="history_main">
