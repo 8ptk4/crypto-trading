@@ -4,9 +4,12 @@ import { TextField } from "final-form-material-ui";
 import { Grid, Button } from "@material-ui/core";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-const showResults = async values => {
+const handleSubmit = async values => {
   await sleep(500);
-  window.alert(JSON.stringify(values, undefined, 2));
+  values.status = "Account created successfuly";
+  setTimeout(() => {
+    window.alert("you will be redirected now!");
+  }, 2000);
 };
 
 const validate = values => {
@@ -26,7 +29,7 @@ const validate = values => {
   if (!values.verifyPassword) {
     errors.verifyPassword = "Required";
   }
-  if (values.password != values.verifyPassword) {
+  if (values.password !== values.verifyPassword) {
     errors.password = "Passwords doesn't match";
     errors.verifyPassword = "Passwords doesn't match";
   }
@@ -38,7 +41,7 @@ const Signup = ({ classes }) => {
     <>
       <h1>Create Account</h1>
 
-      <Form onSubmit={showResults} validate={validate}>
+      <Form onSubmit={handleSubmit} validate={validate}>
         {({ handleSubmit, values, pristine }) => (
           <form onSubmit={handleSubmit} noValidate>
             <div>
@@ -120,6 +123,7 @@ const Signup = ({ classes }) => {
             <pre style={{ color: "white" }}>
               {JSON.stringify(values, undefined, 2)}
             </pre>
+            <h4>{values.status}</h4>
           </form>
         )}
       </Form>

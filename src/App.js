@@ -13,6 +13,9 @@ import { BrowserRouter, Route, Redirect, Switch, Link } from "react-router-dom";
 // LoginLayout Pages
 import Index from "./layout/Login/Index";
 
+// Authentication
+import Auth from "./Auth";
+
 const LoginLayout = lazy(() => import("./layout/Login/Login"));
 const Signup = lazy(() => import("./layout/Login/Signup"));
 const Signin = lazy(() => import("./layout/Login/Signin"));
@@ -42,11 +45,19 @@ const DashboardLayoutRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={matchProps => (
-        <DashboardLayout>
-          <Component {...matchProps} />
-        </DashboardLayout>
-      )}
+      render={matchProps =>
+        Auth.getAuth() ? (
+          <DashboardLayout>
+            <Component {...matchProps} />
+          </DashboardLayout>
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/"
+            }}
+          />
+        )
+      }
     />
   );
 };
