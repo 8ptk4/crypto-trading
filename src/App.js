@@ -1,22 +1,14 @@
-//import React from "react";
-//import { BrowserRouter } from "react-router-dom";
-//import Layout from "components/layout";
-//import Router from "components/router";
-
-//import Router from "./router";
-
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Redirect, Switch, Link } from "react-router-dom";
 
-// LoginLayout Pages
-import Index from "./layout/Login/Index";
-
 // Authentication
 import Auth from "./Auth";
 
+// Login
 const LoginLayout = lazy(() => import("./layout/Login/Login"));
+const Index = lazy(() => import("./layout/Login/Index"));
 const Signup = lazy(() => import("./layout/Login/Signup"));
 const Signin = lazy(() => import("./layout/Login/Signin"));
 
@@ -28,61 +20,93 @@ const Wallet = lazy(() => import("./layout/Dashboard/pages/Wallet"));
 const Deposit = lazy(() => import("./layout/Dashboard/pages/Deposit"));
 const Withdraw = lazy(() => import("./layout/Dashboard/pages/Withdraw"));
 
-const LoginLayoutRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={matchProps => (
-        <LoginLayout>
-          <Component {...matchProps} />
-        </LoginLayout>
-      )}
-    />
-  );
-};
-
-const DashboardLayoutRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={matchProps =>
-        Auth.getAuth() ? (
-          <DashboardLayout>
-            <Component {...matchProps} />
-          </DashboardLayout>
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/"
-            }}
-          />
-        )
-      }
-    />
-  );
-};
-
 const App = props => {
+  const [token, setToken] = useState(null);
+  const storage = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (storage === null || storage.length === 0) {
+      setToken(null);
+    } else {
+      setToken(storage);
+    }
+  }, [storage]);
+
+  const LoginLayoutRoute = ({ component: Component, ...rest }) => {
+    return (
+      <Route
+        {...rest}
+        render={matchProps =>
+          token ? (
+            <Redirect
+              to={{
+                pathname: "/dashboard/home"
+              }}
+            />
+          ) : (
+            <LoginLayout>
+              <Component {...matchProps} />
+            </LoginLayout>
+          )
+        }
+      />
+    );
+  };
+
+  const DashboardLayoutRoute = ({ component: Component, ...rest }) => {
+    console.log({ ...rest });
+    return (
+      <Route
+        {...rest}
+        render={matchProps =>
+          token ? (
+            <DashboardLayout>
+              <Component {...matchProps} />
+            </DashboardLayout>
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/"
+              }}
+            />
+          )
+        }
+      />
+    );
+  };
+
   return (
     <>
       <BrowserRouter>
         <Suspense fallback={<h1>Loading...</h1>}>
           <Switch>
-            <LoginLayoutRoute path="/" exact component={Index} />
-            <LoginLayoutRoute path="/signup" component={Signup} />
-            <LoginLayoutRoute path="/signin" component={Signin} />
-
-            <DashboardLayoutRoute path="/dashboard/home" component={Home} />
-            <DashboardLayoutRoute path="/dashboard/trade" component={Trade} />
-            <DashboardLayoutRoute path="/dashboard/wallet" component={Wallet} />
-            <DashboardLayoutRoute
-              path="/dashboard/deposit"
-              component={Deposit}
-            />
-            <DashboardLayoutRoute
-              path="/dashboard/withdraw"
-              component={Withdraw}
-            />
+            {!token ? (
+              <>
+                <LoginLayoutRoute path="/" exact component={Index} />
+                <LoginLayoutRoute path="/signup" component={Signup} />
+                <LoginLayoutRoute path="/signin" component={Signin} />
+              </>
+            ) : (
+              <>
+                <DashboardLayoutRoute path="/dashboard/home" component={Home} />
+                <DashboardLayoutRoute
+                  path="/dashboard/trade"
+                  component={Trade}
+                />
+                <DashboardLayoutRoute
+                  path="/dashboard/wallet"
+                  component={Wallet}
+                />
+                <DashboardLayoutRoute
+                  path="/dashboard/deposit"
+                  component={Deposit}
+                />
+                <DashboardLayoutRoute
+                  path="/dashboard/withdraw"
+                  component={Withdraw}
+                />
+              </>
+            )}
           </Switch>
         </Suspense>
       </BrowserRouter>

@@ -1,16 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Field } from "react-final-form";
 import { TextField } from "final-form-material-ui";
 import { Grid, Button } from "@material-ui/core";
+import { Redirect } from "react-router-dom";
+import ArrowBack from "@material-ui/icons/ArrowBack";
+import axios from "axios";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-const handleSubmit = async values => {
-  await sleep(500);
-  values.status = "Account created successfuly";
-  setTimeout(() => {
-    window.alert("you will be redirected now!");
-  }, 2000);
-};
 
 const validate = values => {
   const errors = {};
@@ -36,9 +32,39 @@ const validate = values => {
   return errors;
 };
 
-const Signup = ({ classes }) => {
+const Signup = ({ classes, history }) => {
+  const [status, setStatus] = useState(" ");
+
+  const handleSubmit = async values => {
+    await sleep(500);
+    axios({
+      method: "post",
+      url: `http://localhost:1337/account/signup`,
+      data: values
+    }).then(
+      response => {
+        setStatus(response.data.response);
+        setTimeout(() => {
+          history.push("/signin");
+        }, 1500);
+      },
+      error => {
+        setStatus("Account couldn't be created!");
+      }
+    );
+  };
+
   return (
     <>
+      <p>
+        <ArrowBack
+          fontSize="large"
+          className="arrow_back"
+          onClick={() => {
+            history.push("/");
+          }}
+        />
+      </p>
       <h1>Create Account</h1>
 
       <Form onSubmit={handleSubmit} validate={validate}>
@@ -115,15 +141,9 @@ const Signup = ({ classes }) => {
                 </Grid>
               </Grid>
             </div>
-            <br />
-            <br />
-
-            <br />
-            <br />
-            <pre style={{ color: "white" }}>
-              {JSON.stringify(values, undefined, 2)}
-            </pre>
-            <h4>{values.status}</h4>
+            <div className="status">
+              <h4>{status}</h4>
+            </div>
           </form>
         )}
       </Form>

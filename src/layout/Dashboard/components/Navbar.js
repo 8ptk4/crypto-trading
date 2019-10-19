@@ -13,7 +13,10 @@ import RemoveFromQueueIcon from "@material-ui/icons/RemoveFromQueue";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AllInclusiveIcon from "@material-ui/icons/AllInclusive";
 
-const Navbar = () => {
+// Authentication
+import Auth from "../../../Auth";
+
+const Navbar = ({ history }) => {
   return (
     <>
       <Col className="navbar_left" md={1}>
@@ -45,7 +48,14 @@ const Navbar = () => {
               <RemoveFromQueueIcon fontSize="large" className="icon" />
               WITHDRAW
             </Link>
-            <Link to="signout" className="sign_out">
+            <Link
+              onClick={() => {
+                Auth.signout();
+                history.push("/");
+                window.location.reload();
+              }}
+              className="sign_out"
+            >
               <ExitToAppIcon fontSize="large" className="icon" />
               SIGN_OUT
             </Link>

@@ -4,9 +4,16 @@
   padding: 0 !important;
 }
 
-.test {
+.dashboard {
   height: 100vh;
   background-image: url("./new_york.jpg");
+}
+
+.right {
+  margin-right: 20px;
+}
+.left {
+  float: left;
 }
 
 .navbar_left {
@@ -31,6 +38,7 @@
 }
 
 .primary_button {
+  margin-top: 20px !important;
   margin-right: 30px !important;
   width: 100%;
 }
@@ -39,6 +47,7 @@
 }
 
 .secondary_button {
+  margin-top: 20px !important;
   background: rgb(45, 143, 45) !important;
   width: 100%;
 }
@@ -51,6 +60,7 @@
   color: rgb(214, 211, 211) !important;
   background: transparent !important;
 }
+
 .label input:-webkit-autofill {
   -webkit-text-fill-color: rgb(214, 211, 211) !important;
   -webkit-box-shadow: 0 0 0 30px #2f303e inset !important;
@@ -115,7 +125,7 @@
   height: 8vh;
   background: rgba(134, 54, 168, 0.8);
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
   color: white;
   font-size: 1em;
@@ -133,6 +143,20 @@
   background: rgba(47, 49, 62, 0.98);
   color: grey;
   overflow: hidden;
+}
+
+.arrow_back {
+  color: #454753;
+}
+
+.arrow_back:hover {
+  color: grey;
+  transition: 1.3s;
+  cursor: pointer;
+}
+
+.status {
+  padding: 40px 0 0 0;
 }
 
 .scrollbar-vertical {

@@ -7,8 +7,8 @@ const DashboardLayout = ({ children }) => {
   return (
     <>
       <Container fluid>
-        <Row className="landing_page">
-          <Navbar />
+        <Row className="dashboard">
+          <Navbar history={children.props.history} />
           {children}
           <History />
         </Row>

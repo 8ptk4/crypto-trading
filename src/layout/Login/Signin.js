@@ -2,12 +2,11 @@ import React from "react";
 import { Form, Field } from "react-final-form";
 import { TextField } from "final-form-material-ui";
 import { Grid, Button } from "@material-ui/core";
+import ArrowBack from "@material-ui/icons/ArrowBack";
+import axios from "axios";
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-const showResults = async values => {
-  await sleep(500);
-  window.alert(JSON.stringify(values, undefined, 2));
-};
+// Authentication
+import Auth from "../../Auth";
 
 const validate = values => {
   const errors = {};
@@ -22,16 +21,42 @@ const validate = values => {
   return errors;
 };
 
-const Signin = ({ classes }) => {
+const Signin = ({ classes, history }) => {
+
+  const handleSubmit = async values => {
+    axios({
+      method: "post",
+      url: "http://localhost:1337/account/signin",
+      data: values
+    })
+      .then(response => {
+        Auth.authenticate(response.data.hemlighet, response.data.username);
+        history.push("/dashboard/home");
+        window.location.reload();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
+      <p>
+        <ArrowBack
+          fontSize="large"
+          className="arrow_back"
+          onClick={() => {
+            history.push("/");
+          }}
+        />
+      </p>
       <h1>Sign In</h1>
 
-      <Form onSubmit={showResults} validate={validate}>
+      <Form onSubmit={handleSubmit} validate={validate}>
         {({ handleSubmit, values, pristine }) => (
           <form onSubmit={handleSubmit} noValidate>
             <div>
-              <Grid container alignItems="flex-start" xs={6} spacing={2}>
+              <Grid container alignItems="flex-start" xs={12} spacing={2}>
                 <Grid item xs={12}>
                   <Field
                     className="label"
@@ -55,7 +80,7 @@ const Signin = ({ classes }) => {
                     autoComplete="false"
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Button
                     variant="contained"
                     color="primary"
