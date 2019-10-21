@@ -56,8 +56,8 @@ const Signin = ({ classes, history }) => {
         {({ handleSubmit, values, pristine }) => (
           <form onSubmit={handleSubmit} noValidate>
             <div>
-              <Grid container alignItems="flex-start" xs={12} spacing={2}>
-                <Grid item xs={12}>
+              <Grid container alignItems="flex-start" item={true} xs={12} spacing={2}>
+                <Grid item={true} xs={12}>
                   <Field
                     className="label"
                     name="email"
@@ -68,7 +68,7 @@ const Signin = ({ classes, history }) => {
                     label="Email"
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item={true} xs={12}>
                   <Field
                     className="label"
                     fullWidth
@@ -80,7 +80,7 @@ const Signin = ({ classes, history }) => {
                     autoComplete="false"
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item={true} xs={6}>
                   <Button
                     variant="contained"
                     color="primary"

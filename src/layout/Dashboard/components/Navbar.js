@@ -29,18 +29,18 @@ const Navbar = ({ history }) => {
               <HomeOutlinedIcon fontSize="large" className="icon" />
               HOME
             </Link>
-            <Link to="/dashboard/wallet" eventKey="link-1">
+            <Link to="/dashboard/wallet">
               <AccountBalanceWalletOutlinedIcon
                 fontSize="large"
                 className="icon"
               />
               WALLET
             </Link>
-            <Link to="/dashboard/trade" eventKey="link-2">
+            <Link to="/dashboard/trade">
               <AutorenewIcon fontSize="large" className="icon" />
               TRADE
             </Link>
-            <Link to="/dashboard/deposit" eventKey="link-2">
+            <Link to="/dashboard/deposit">
               <AddToQueueIcon fontSize="large" className="icon" />
               DEPOSIT
             </Link>
@@ -48,7 +48,7 @@ const Navbar = ({ history }) => {
               <RemoveFromQueueIcon fontSize="large" className="icon" />
               WITHDRAW
             </Link>
-            <Link
+            <span
               onClick={() => {
                 Auth.signout();
                 history.push("/");
@@ -58,7 +58,7 @@ const Navbar = ({ history }) => {
             >
               <ExitToAppIcon fontSize="large" className="icon" />
               SIGN_OUT
-            </Link>
+            </span>
           </Nav>
         </div>
       </Col>

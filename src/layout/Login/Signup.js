@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, Field } from "react-final-form";
 import { TextField } from "final-form-material-ui";
 import { Grid, Button } from "@material-ui/core";
-import { Redirect } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import axios from "axios";
 
@@ -72,7 +71,7 @@ const Signup = ({ classes, history }) => {
           <form onSubmit={handleSubmit} noValidate>
             <div>
               <Grid container alignItems="flex-start" spacing={2}>
-                <Grid item xs={6}>
+                <Grid item={true} xs={6}>
                   <Field
                     className="label"
                     fullWidth
@@ -83,7 +82,7 @@ const Signup = ({ classes, history }) => {
                     label="First Name"
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item={true} xs={6}>
                   <Field
                     className="label"
                     fullWidth
@@ -94,7 +93,7 @@ const Signup = ({ classes, history }) => {
                     label="Last Name"
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item={true} xs={12}>
                   <Field
                     className="label"
                     name="email"
@@ -105,7 +104,7 @@ const Signup = ({ classes, history }) => {
                     label="Email"
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item={true} xs={6}>
                   <Field
                     className="label"
                     fullWidth
@@ -117,7 +116,7 @@ const Signup = ({ classes, history }) => {
                     autoComplete="false"
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item={true} xs={6}>
                   <Field
                     className="label"
                     fullWidth
@@ -129,7 +128,7 @@ const Signup = ({ classes, history }) => {
                     autoComplete="false"
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item={true} xs={6}>
                   <Button
                     variant="contained"
                     color="primary"

@@ -9,7 +9,7 @@ const Home = ({ classes }) => {
       <p>The place to trade Ethereum, Bitcoin and ...</p>
       <div>
         <Grid container alignItems="flex-start" spacing={2}>
-          <Grid item xs={6}>
+          <Grid item={true} xs={6}>
             <Button
               variant="contained"
               color="primary"
@@ -19,7 +19,7 @@ const Home = ({ classes }) => {
               Create Account
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item={true} xs={6}>
             <Button
               variant="contained"
               color="secondary"
