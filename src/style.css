@@ -1,120 +1,27 @@
-.navbar_left,
+
+/*
 .main,
 .history {
   padding: 0 !important;
 }
 
 .dashboard {
-  height: 100vh;
-  background-image: url("./new_york.jpg");
+  min-height: 100vh;
 }
 
-.chartcards_wrapper {
-  width: 100%;
-  height: 20vh;
-  display: inline-flex;
-  justify-content: space-around;
-  align-items: center;
+.recharts-default-tooltip {
+  background: black !important;
+  color: white !important;
 }
 
-.chartcard_first {
-  background: #83ada0;
-  width: 20%;
-  padding: 20px;
-  margin: 10px;
-  position:relative;
-  -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
-  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
-  box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
-}
 
-.panel_first {
-  padding: 10px;
-  margin: 20px;
-  color: black;
-  background: #83ada0;
-  word-spacing: 10px;
-}
-
-.panel_second {
-  padding: 10px;
-  color: black;
-  background: #8875cf;
-  word-spacing: 10px;
-}
-
-.panel_balance {
-  padding: 10px;
-  background: #000;
-  word-spacing: 10px;
-  margin: 20px;
-}
-
-.panel_value {
-  color: white;
-  font-size: 1.3em;
-  text-shadow: 1px 1px 10px #fff;
-}
 
 
 .history_element {
   padding: 20px 20px 0 20px;
 }
 
-.chartcard_add {
-  color: white;
-}
 
-.chartcard_add:hover {
-  transition: 0.5s;
-  color: black;
-  cursor: pointer;
-}
-
-.chartcard_remove {
-  color: white;
-}
-
-.chartcard_remove:hover {
-  transition: 0.5s;
-  color: black;
-  cursor: pointer;
-}
-
-.chartcard_top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.chartcard_title {
-  color: #000;
-  font-size: 1.3em;
-  font-weight: bold;
-}
-
-.chartcard_bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.chartcard_second {
-  background: #8875cf;
-  width: 20%;
-  padding: 20px;
-  margin: 10px;
-  position:relative;
-  -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
-  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
-  box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
-}
-
-.chartcard_value {
-  font-size: 1.5em;
-  color: white;
-  text-shadow: 1px 1px 10px #fff;
-}
 
 .currency_chart svg {
   width: 500px !important;
@@ -124,107 +31,24 @@
 .right {
   margin-right: 20px;
 }
-.left {
-  float: left;
-}
 
-.navbar_left {
-  background: #2f313e;
-}
 
-.landing_page {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #2f303e;
-}
 
-.landing_page_right {
-  transform: scale(10);
-  color: #292a36;
-}
 
-.landing_page_left {
-  color: #57575f;
-}
 
-.primary_button {
-  margin-top: 20px !important;
-  margin-right: 30px !important;
-  width: 100%;
-}
-.primary_button:hover {
-  color: white;
-}
 
-.secondary_button {
-  margin-top: 20px !important;
-  background: rgb(45, 143, 45) !important;
-  width: 100%;
-}
-.secondary_button:hover {
-  background: rgb(24, 88, 24) !important;
-  color: white;
-}
 
-.label input {
-  color: rgb(214, 211, 211) !important;
-  background: transparent !important;
-}
 
-.label input:-webkit-autofill {
-  -webkit-text-fill-color: rgb(214, 211, 211) !important;
-  -webkit-box-shadow: 0 0 0 30px #2f303e inset !important;
-}
 
-.label label {
-  color: grey !important;
-}
 
-.navbar_top {
-  height: 8vh;
-  background: rgba(138, 138, 143, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 2em;
-}
 
-.navbar_main {
-  height: 92vh;
-  background: rgba(47, 49, 62, 0.2);
-  display: flex;
-  justify-content: center;
-  padding: 30px;
-  color: grey;
-  text-align: center;
-  font-size: 0.8em;
-}
 
-.navbar_main a {
-  color: grey;
-}
 
-.navbar_main a:hover {
-  color: rgb(194, 194, 194);
-}
 
-.history {
-  height: 100vh;
-}
 
-.main {
-  height: 100vh;
-}
 
-.center {
-  text-align: center;
-}
 
 .history_top {
-  height: 8vh;
   background: rgba(47, 49, 62, 0.8);
   display: flex;
   justify-content: center;
@@ -233,46 +57,39 @@
   font-size: 2em;
 }
 
-.main_top {
-  height: 8vh;
+.dashboard {
+  background: transparent;
+  background-image: url('./new_york.jpg');
+  background-size: cover; 
+  -ms-background-size: cover; 
+  -o-background-size: cover; 
+  -moz-background-size: cover; 
+  -webkit-background-size: cover;
+}
+
+.panel_wrapper {
   background: rgba(134, 54, 168, 0.8);
+}
+
+.main_top {
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: white;
   font-size: 1em;
-  padding-left: 20px;
+  padding: 40px;
 }
 
-.recharts-responsive-container {
-  height: 70vh !important;
-}
-
-.main_main {
-  height: 92vh;
-  background: rgba(134, 54, 168, 0.98);
-}
-
+*/
+/*
 .history_main {
-  height: 92vh;
   background: rgba(47, 49, 62, 0.98);
   color: grey;
   overflow: hidden;
 }
 
-.arrow_back {
-  color: #454753;
-}
 
-.arrow_back:hover {
-  color: grey;
-  transition: 1.3s;
-  cursor: pointer;
-}
 
-.status {
-  padding: 40px 0 0 0;
-}
 
 .scrollbar-vertical {
   background-color: grey;
@@ -314,3 +131,4 @@
   left: 0;
   width: 100%;
 }
+*/

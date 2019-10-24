@@ -1,18 +1,17 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
-import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import axios from "axios";
 
 // Login
-const LoginLayout = lazy(() => import("./layout/Login/Login"));
+const LoginLayout = lazy(() => import("./layout/Login/Login/Login"));
 const Index = lazy(() => import("./layout/Login/Index"));
-const Signup = lazy(() => import("./layout/Login/Signup"));
-const Signin = lazy(() => import("./layout/Login/Signin"));
+const Signup = lazy(() => import("./layout/Login/Signup/Signup"));
+const Signin = lazy(() => import("./layout/Login/Signin/Signin"));
 
 // Dashboard
 const DashboardLayout = lazy(() => import("./layout/Dashboard/Dashboard"));
-const Home = lazy(() => import("./layout/Dashboard/pages/Home"));
+const Home = lazy(() => import("./layout/Dashboard/pages/home/Home"));
 const Trade = lazy(() => import("./layout/Dashboard/pages/Trade"));
 const Wallet = lazy(() => import("./layout/Dashboard/pages/Wallet"));
 const Deposit = lazy(() => import("./layout/Dashboard/pages/Deposit"));

@@ -1,0 +1,50 @@
+.panel_wrapper {
+  background: rgba(134, 54, 168, 0.8);
+  min-height: 70px;
+}
+.panel_first {
+  margin: 10px;
+  padding: 5px; 
+  color: black;
+  background: #83ada0;
+  word-spacing: 10px;
+  width: max-content;
+}
+
+.panel_second {
+  margin: 10px;
+  padding: 5px;
+  color: black;
+  background: #8875cf;
+  word-spacing: 10px;
+  width: max-content;
+}
+
+.panel_element_start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.panel_element_end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.panel_balance {
+  color: white;
+  font-size: 1.3em;
+  text-shadow: 1px 1px 10px #fff;
+  margin: 10px;
+  padding: 5px;
+  background: #000;
+  word-spacing: 10px;
+  width: max-content;
+}
+
+.panel_value {
+  color: white;
+  font-size: 1.3em;
+  text-shadow: 1px 1px 10px #fff;
+}

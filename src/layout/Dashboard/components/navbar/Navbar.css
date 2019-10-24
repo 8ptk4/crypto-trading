@@ -1,0 +1,116 @@
+
+.link {
+  color: grey;
+  padding: 8px;
+}
+
+.link:hover {
+  color: rgb(194, 194, 194);
+}
+
+.navbar_toggler,
+.collapsed {
+  border: 0 !important;
+  outline: 0 !important;
+}
+
+.navbar-toggler:focus {
+  outline: 0 !important;
+  border: 0 !important;
+}
+
+/*
+.navbar_top {
+  background: rgba(138, 138, 143, 0.2);
+  color: white;
+  font-size: 2em;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+
+.navbar_main {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  color: grey;
+  text-align: center;
+  font-size: 0.8em;
+}
+
+.navbar_left {
+  padding: 0;
+  background: #2f313e;
+}
+*/
+.navbar {
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  height: 100%;
+  font-size: 0.8em;
+  padding: 0;
+  background: rgba(138, 138, 143, 0.2) !important;
+}
+
+.align_bottom {
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.navbar-brand {
+  margin: 0;
+}
+
+.navbar_items {
+  display: block;
+}
+
+.navbar_top {
+  width: 100%;
+  height: 70px;
+  background: rgba(138, 138, 143, 0.2);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.mr-auto {
+  width: 100% !important;
+  height: 100% !important;
+  text-align: center !important;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  box-orient: vertical !important;
+}
+
+.icon_logo {
+  color: #24252b;
+  fill: #ffffff;
+  stroke: rgba(134, 54, 168, 0.98);
+  stroke-width: 0.8;
+  transform: scale(2.3);
+}
+
+.icon_logo path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: dash 30s linear alternate infinite;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

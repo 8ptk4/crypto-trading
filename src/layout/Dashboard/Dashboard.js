@@ -1,26 +1,37 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import History from "./components/History";
-import Panel from "./components/Panel";
+import Panel from "./components/Panel/Panel";
+
+import "./Dashboard.css";
 
 const DashboardLayout = ({ children, ...props }) => {
   return (
     <>
-      <Container fluid>
-        <Row className="dashboard">
+      <section className="main hbox space-between">
+        <nav>
           <Navbar history={children.props.history} />
-          <Col className="main" md={9}>
-            <Panel {...props} />
-            {children}
-          </Col>
-          <Col className="history" md={2}>
-            <History />
-          </Col>
-        </Row>
-      </Container>
+        </nav>
+        <article>
+          <Panel {...props} />
+          {children}
+        </article>
+        <aside>Aside</aside>
+      </section>
     </>
   );
 };
 
 export default DashboardLayout;
+
+
+/*
+      <div className="dashboard_wrapper hbox space-between">
+        <Navbar history={children.props.history} />
+        <Panel {...props} />
+        <div className="main_wrapper">
+          {children}
+        </div>
+        <History className="history_wrapper" />
+      </div>
+*/

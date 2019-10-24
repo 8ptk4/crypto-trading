@@ -4,6 +4,7 @@ import { TextField } from "final-form-material-ui";
 import { Grid, Button } from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import axios from "axios";
+import "./Signup.css";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 

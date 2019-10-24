@@ -1,0 +1,92 @@
+.chartcard_container {
+  padding: 20px;
+  background: rgba(134, 54, 168, 0.98);
+  min-height: calc(100% - 70px);
+  height: 170px;
+}
+
+.chart_container {
+  padding: 10px;
+  height: calc(100% - 240px);
+}
+
+.chart_wrapper {
+  height: 85%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recharts-surface {
+  height: 100% !important;
+}
+
+.chartcard_bottom {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.chartcard_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.chartcard_first {
+  background: #83ada0;
+  width: 100%;
+  padding: 20px;
+  position:relative;
+  -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.chartcard_second {
+  background: #8875cf;
+  width: 100%;
+  padding: 20px;
+  position:relative;
+  -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.chartcard_form {
+  width: 100%;
+}
+
+.chartcard_buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.chartcard_title {
+  color: #000;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.chartcard_middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chartcard_value {
+  font-size: 1.5em;
+  color: white;
+  text-shadow: 1px 1px 10px #fff;
+}
+
+.dashboard {
+  min-height: 100%;
+}
+
+.hej {
+  height: 92% !important;
+}

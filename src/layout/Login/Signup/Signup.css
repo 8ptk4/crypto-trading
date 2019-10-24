@@ -1,0 +1,27 @@
+.arrow_back {
+  color: #454753;
+}
+
+.arrow_back:hover {
+  color: grey;
+  transition: 1.3s;
+  cursor: pointer;
+}
+
+.label input {
+  color: rgb(214, 211, 211) !important;
+  background: transparent !important;
+}
+
+.label input:-webkit-autofill {
+  -webkit-text-fill-color: rgb(214, 211, 211) !important;
+  -webkit-box-shadow: 0 0 0 30px #2f303e inset !important;
+}
+
+.label label {
+  color: grey !important;
+}
+
+.status {
+  padding: 40px 0 0 0;
+}

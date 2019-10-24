@@ -1,7 +1,9 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 
 import AllInclusiveIcon from "@material-ui/icons/AllInclusive";
+
+import { Container, Row, Col } from "react-bootstrap";
+import "./Login.css";
 
 const LoginLayout = ({ children }) => {
   return (
@@ -21,3 +23,7 @@ const LoginLayout = ({ children }) => {
 };
 
 export default LoginLayout;
+
+/*
+
+*/
