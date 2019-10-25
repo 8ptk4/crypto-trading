@@ -17,26 +17,55 @@ const Wallet = lazy(() => import("./layout/Dashboard/pages/Wallet"));
 const Deposit = lazy(() => import("./layout/Dashboard/pages/Deposit"));
 const Withdraw = lazy(() => import("./layout/Dashboard/pages/Withdraw"));
 
+const loadingStyle = {
+  height: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  background: "#2f303e",
+  color: "lightgrey"
+}
+
 const App = props => {
   const [token, setToken] = useState(null);
   const [balance, setBalance] = useState(0);
 
+  const [holdings, setHoldings] = useState([]);
+
+  const [Btc, setBtc] = React.useState({})
+  const [Bc, setBc] = React.useState({})
+
   const storage = localStorage.getItem("token");
+  const user = localStorage.getItem("username");
 
   const fetchBalance = () => {
-    const user = localStorage.getItem("username");
-
     axios({
       method: "get",
       url: `http://localhost:1337/wallet/balance${user}`
     })
       .then(response => {
-        setBalance(response.data.response.balance);
+        setBalance(response.data.response.balance)
       })
       .catch(error => {
-        console.log(error);
-      });
-  };
+        console.log(error)
+      })
+  }
+
+
+  const fetchHoldings = () => {
+    axios({
+      method: "get",
+      url: `http://localhost:1337/holdings/show`
+    })
+      .then(response => {
+        setHoldings(response.data.row);
+
+      })
+      .catch(error => {
+        console.error(error)
+
+      })
+  }
 
   useEffect(() => {
     if (storage === null || storage.length === 0) {
@@ -44,6 +73,7 @@ const App = props => {
     } else {
       setToken(storage);
       fetchBalance();
+      fetchHoldings();
     }
   }, [storage]);
 
@@ -76,10 +106,14 @@ const App = props => {
           token ? (
             <DashboardLayout
               balance={balance}
-              fetchBalance={fetchBalance} >
+              holdings={holdings}
+              fetchBalance={fetchBalance}
+              fetchHoldings={fetchHoldings} >
               <Component {...matchProps}
                 balance={balance}
-                fetchBalance={fetchBalance} />
+                holdings={holdings}
+                fetchBalance={fetchBalance}
+                fetchHoldings={fetchHoldings} />
             </DashboardLayout>
           ) : (
               <Redirect
@@ -96,7 +130,11 @@ const App = props => {
   return (
     <>
       <BrowserRouter>
-        <Suspense fallback={<h1>Loading...</h1>}>
+        <Suspense fallback={
+          <div style={loadingStyle}>
+            <h1>Loading...</h1>
+          </div>
+        }>
           <Switch>
             {!token ? (
               <>

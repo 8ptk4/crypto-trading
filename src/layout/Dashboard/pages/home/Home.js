@@ -21,9 +21,10 @@ import {
 } from 'recharts';
 
 const Home = props => {
-  const [bitcoin, setBitcoin] = React.useState([])
-  const [bitconnect, setBitconnect] = React.useState([])
   const [data, setData] = React.useState()
+  const [btc, setBtc] = React.useState(0)
+  const [bc, setBc] = React.useState(0)
+
 
   // Get chart data
   React.useEffect(() => {
@@ -32,14 +33,36 @@ const Home = props => {
     socket.on('chart_data', (chartData) => {
       setData(chartData)
     })
+
+    socket.on('crypto_data', (cryptoData) => {
+      const [cryptoBtc, cryptoBc] = cryptoData.map((crypto) => {
+        return crypto.value
+      })
+
+      setBtc(cryptoBtc)
+      setBc(cryptoBc)
+    })
+
   }, [])
 
   return (
     <>
       <Container className="chartcard_container" fluid>
         <Row className="chartcard_row">
-          <ChartcardBtc balance={props.balance} />
-          <ChartcardBc balance={props.balane} />
+          <ChartcardBtc
+            balance={props.balance}
+            history={props.history}
+            holdings={props.holdings}
+            cryptoValue={btc}
+            fetchHoldings={props.fetchHoldings}
+            fetchBalance={props.fetchBalance} />
+          <ChartcardBc
+            balance={props.balance}
+            history={props.history}
+            holdings={props.holdings}
+            cryptoValue={bc}
+            fetchHoldings={props.fetchHoldings}
+            fetchBalance={props.fetchBalance} />
         </Row>
 
         <Row className="chart_wrapper">

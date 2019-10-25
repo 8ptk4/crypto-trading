@@ -4,7 +4,7 @@ import { Scrollbars } from "react-custom-scrollbars"
 import { Form, Field } from "react-final-form"
 import { TextField } from "final-form-material-ui"
 import { Grid, Button } from "@material-ui/core"
-import { Col } from "react-bootstrap"
+import { Col, Modal } from "react-bootstrap"
 
 const validate = values => {
   const errors = {}
@@ -14,8 +14,8 @@ const validate = values => {
     errors.amount = "Required"
   }
 
-  if (values.amount === "30") {
-    errors.amount = "du kan inte köpa 30"
+  if (values.amount < 0 || !values.amount) {
+    errors.amount = "Input not accepted"
   }
 
   return errors
@@ -23,59 +23,70 @@ const validate = values => {
 
 const Chartcards = (props) => {
   const [crypto, setCrypto] = React.useState('BitCoin')
-  const [BtcValue, setBtcValue] = React.useState(0);
-  const [BcValue, setBcValue] = React.useState(0);
+  const [show, setShow] = React.useState(false);
 
-  React.useEffect(() => {
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleTransaction = (values) => {
     axios({
-      method: "get",
-      url: `http://localhost:1337/crypto/`
+      method: "post",
+      url: "http://localhost:1337/holdings/transaction",
+      data: {
+        price: props.cryptoValue,
+        action: values.option,
+        crypto: "BitCoin",
+        amount: values.amount,
+        account: localStorage.getItem("username")
+      }
     })
       .then(response => {
-        const [Btc, Bc] = response.data.response.map((crypto) => {
-          return crypto.value
-        })
-
-        setBtcValue(Btc)
-        setBcValue(Bc)
+        props.fetchHoldings();
+        props.fetchBalance();
       })
       .catch(error => {
-        console.error(error);
-      })
-  })
-
-  const onSubmit = (values) => {
-    return new Promise(resolve => {
-      console.log(`
-        Crypto to Buy: ${crypto}
-        Current Price: ${BtcValue}
-        console.log("BALANCE", ${props.balance});
-        Amount of crypto to buy: ${values.amount}
-      `)
-      // BUY BITCOIN
-      // FOR current price / Bitcoin
-      // AMOUNT AVAILABLE TO BUY SHOULD BE * 
-      // * BANK VALUE / current crypto value
-      // HOLDINGS SHALL GO UNDER DB holdings
-
-      /* NEEDED: 
-      Current BitCoin Price
-      Amount of money on bank
-      Amount of BitCoins to buy
-      */
-
-      setTimeout(resolve, 500)
-    })
+        console.log(error)
+      });
   }
 
+  const onSubmit = (values) => {
+
+    if ((values.amount * props.cryptoValue <= props.balance) && values.option === "buy") {
+      handleTransaction(values)
+      return null
+    }
+
+    if ((values.amount <= props.holdings[0].amount) && values.option === "sell") {
+      handleTransaction(values)
+      return null
+    }
+
+    handleShow()
+  }
 
   return (
     <>
+      <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Insufficient Founds</Modal.Title>
+        </Modal.Header>
+        <Modal.Body></Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="secondary" onClick={() => {
+            props.history.push("/dashboard/deposit");
+          }}>
+            Add founds
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <Col sx={6}>
         <div className="chartcard_first">
           <div className="chartcard_top">
-            <span className="chartcard_title">{crypto}</span>
-            <span className="chartcard_value">{BtcValue} Kr</span>
+            <span className="chartcard_title"></span>
+            <span className="chartcard_value">{props.cryptoValue} Kr</span>
           </div>
 
           <div className="chartcard_bottom">
@@ -85,13 +96,7 @@ const Chartcards = (props) => {
               render={({ handleSubmit, values, submitting, pristine, form }) => (
                 <form
                   className="chartcard_form"
-                  onSubmit={event => {
-                    const promise = handleSubmit(event);
-                    promise.then(() => {
-                      form.reset()
-                    })
-                    return promise;
-                  }}
+                  onSubmit={handleSubmit}
                 >
 
                   <div>
@@ -100,7 +105,6 @@ const Chartcards = (props) => {
                       name="amount"
                       fullWidth
                       required
-                      pattern="^[0-9] * $"
                       component={TextField}
                       type="number"
                       label="Amount"
@@ -115,6 +119,9 @@ const Chartcards = (props) => {
                         color="primary"
                         className="primary_button"
                         type="submit"
+                        onClick={() => {
+                          form.change("option", "sell");
+                        }}
                         disabled={submitting || pristine}
                       >
                         Sell
@@ -127,6 +134,9 @@ const Chartcards = (props) => {
                         color="primary"
                         className="primary_button"
                         type="submit"
+                        onClick={() => {
+                          form.change("option", "buy");
+                        }}
                         disabled={submitting || pristine}
                       >
                         Buy
