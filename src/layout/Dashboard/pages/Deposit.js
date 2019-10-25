@@ -33,13 +33,13 @@ const Deposit = (props) => {
         }
       })
         .then(response => {
-          setStatus(response.data.response);
-          props.fetchBalance();
+          setStatus(response.data.response)
+          props.fetchBalance()
         })
         .catch(error => {
-          console.log(error);
+          console.log(error)
         });
-      setTimeout(resolve, 2000);
+      setTimeout(resolve, 5000)
     })
   }
 

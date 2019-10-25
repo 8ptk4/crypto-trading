@@ -124,7 +124,7 @@ const Signup = ({ classes, history }) => {
                     required
                     name="verifyPassword"
                     component={TextField}
-                    type=""
+                    type="password"
                     label="Verify Password"
                     autoComplete="false"
                   />

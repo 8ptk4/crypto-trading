@@ -114,7 +114,7 @@ const App = props => {
                 <>
                   <DashboardLayoutRoute
                     path="/dashboard/home"
-                    component={Home} />
+                    component={Home} balance={balance} />
                   <DashboardLayoutRoute
                     path="/dashboard/trade"
                     component={Trade} />
