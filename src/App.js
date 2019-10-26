@@ -8,7 +8,6 @@ const LoginLayout = lazy(() => import("./layout/Login/Login/Login"))
 const Index = lazy(() => import("./layout/Login/Index"))
 const Signup = lazy(() => import("./layout/Login/Signup/Signup"))
 const Signin = lazy(() => import("./layout/Login/Signin/Signin"))
-
 const DashboardLayout = lazy(() => import("./layout/Dashboard/Dashboard"))
 const Trade = lazy(() => import("./layout/Dashboard/pages/trade/Trade"))
 const Wallet = lazy(() => import("./layout/Dashboard/pages/Wallet/Wallet"))
@@ -23,14 +22,16 @@ const loadingStyle = {
   color: "lightgrey"
 }
 
+
+
 const App = props => {
   const [token, setToken] = useState(null)
   const [balance, setBalance] = useState(0)
-
   const [holdings, setHoldings] = useState([])
-
   const storage = localStorage.getItem("token")
   const user = localStorage.getItem("username")
+
+
 
   const fetchBalance = () => {
     axios({
@@ -44,6 +45,7 @@ const App = props => {
         console.log(error)
       })
   }
+
 
 
   const fetchHoldings = () => {
@@ -73,6 +75,8 @@ const App = props => {
 
   }, [storage])
 
+
+
   const LoginLayoutRoute = ({ component: Component, ...rest }) => {
     return (
       <Route
@@ -85,6 +89,8 @@ const App = props => {
       />
     )
   }
+
+
 
   const DashboardLayoutRoute = ({ component: Component, ...rest }) => {
     return (
@@ -112,6 +118,8 @@ const App = props => {
       />
     )
   }
+
+
 
   return (
     <>
