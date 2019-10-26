@@ -2,11 +2,11 @@ import React from "react";
 
 import { Grid, Button } from "@material-ui/core";
 
-const Home = ({ classes }) => {
+const Trade = ({ classes }) => {
   return (
     <>
       <h1>Buy, Sell and Trade Cryptocurrency </h1>
-      <p>The place to trade Ethereum, Bitcoin and ...</p>
+      <p>The best place to trade BitCoin and Bitconnect.</p>
       <div>
         <Grid container alignItems="flex-start" spacing={2}>
           <Grid item={true} xs={6}>
@@ -35,4 +35,4 @@ const Home = ({ classes }) => {
   );
 };
 
-export default Home;
+export default Trade;

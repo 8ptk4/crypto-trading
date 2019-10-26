@@ -1,3 +1,7 @@
+# Crypto-trading platform
+Kursen jsramverk på BTH, webprogrammering
+Skapad av Patrik Karlsson
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

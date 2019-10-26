@@ -1,14 +1,12 @@
 import React from "react"
 import axios from "axios"
-import { Scrollbars } from "react-custom-scrollbars"
 import { Form, Field } from "react-final-form"
 import { TextField } from "final-form-material-ui"
-import { Grid, Button } from "@material-ui/core"
+import { Button } from "@material-ui/core"
 import { Col, Modal } from "react-bootstrap"
 
 const validate = values => {
   const errors = {}
-  const invalidChar = /\D/g
 
   if (!values.amount) {
     errors.amount = "Required"
@@ -22,11 +20,12 @@ const validate = values => {
 }
 
 const Chartcards = (props) => {
-  const [crypto, setCrypto] = React.useState('BitCoin')
   const [show, setShow] = React.useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+
 
   const handleTransaction = (values) => {
     axios({
@@ -41,28 +40,56 @@ const Chartcards = (props) => {
       }
     })
       .then(response => {
-        props.fetchHoldings();
-        props.fetchBalance();
+        props.fetchHoldings()
+        props.fetchBalance()
+
+        handleHistory(values)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+
+
+  const handleHistory = (values) => {
+    axios({
+      method: "post",
+      url: "http://localhost:1337/history/add",
+      data: {
+        buyer: localStorage.getItem("username"),
+        crypto: "BitConnect",
+        action: values.option,
+        amount: values.amount,
+        price: props.cryptoValue
+      }
+    })
+      .then(response => {
+        console.log(response);
       })
       .catch(error => {
         console.log(error)
       });
   }
 
+
+
   const onSubmit = (values) => {
-    console.log("hej", props.holdings[1].amount)
-    if ((values.amount * props.cryptoValue <= props.balance) && values.option === "buy") {
+    if ((values.amount * props.cryptoValue <= props.balance) && values.option === "purchased") {
       handleTransaction(values)
       return null
     }
 
-    if ((values.amount <= props.holdings[1].amount) && values.option === "sell") {
+    if ((values.amount <= props.holdings[1].amount) && values.option === "sold") {
       handleTransaction(values)
       return null
     }
 
     handleShow()
   }
+
+
+
   return (
     <>
       <Modal show={show} onHide={handleClose} animation={false}>
@@ -120,7 +147,7 @@ const Chartcards = (props) => {
                         className="primary_button"
                         type="submit"
                         onClick={() => {
-                          form.change("option", "sell");
+                          form.change("option", "sold");
                         }}
                         disabled={submitting || pristine}
                       >
@@ -135,7 +162,7 @@ const Chartcards = (props) => {
                         className="primary_button"
                         type="submit"
                         onClick={() => {
-                          form.change("option", "buy");
+                          form.change("option", "purchased");
                         }}
                         disabled={submitting || pristine}
                       >

@@ -33,7 +33,7 @@ const Signin = ({ classes, history }) => {
     })
       .then(response => {
         Auth.authenticate(response.data.hemlighet, response.data.username);
-        history.push("/dashboard/home");
+        history.push("/dashboard/trade");
         window.location.reload();
       })
       .catch(error => {
@@ -94,12 +94,6 @@ const Signin = ({ classes, history }) => {
                 </Grid>
               </Grid>
             </div>
-
-            <br />
-            <br />
-            <pre style={{ color: "white" }}>
-              {JSON.stringify(values, undefined, 2)}
-            </pre>
           </form>
         )}
       </Form>

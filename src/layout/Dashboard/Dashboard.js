@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "./components/navbar/Navbar";
-import History from "./components/History";
+import History from "./components/History/History";
 import Panel from "./components/Panel/Panel";
 
 import "./Dashboard.css";
@@ -16,7 +16,9 @@ const DashboardLayout = ({ children, ...props }) => {
           <Panel {...props} />
           {children}
         </article>
-        <aside>Aside</aside>
+        <aside>
+          <History />
+        </aside>
       </section>
     </>
   );

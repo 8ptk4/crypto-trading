@@ -6,6 +6,7 @@
 
 .link:hover {
   color: rgb(194, 194, 194);
+  cursor: pointer;
 }
 
 .navbar_toggler,
@@ -19,31 +20,6 @@
   border: 0 !important;
 }
 
-/*
-.navbar_top {
-  background: rgba(138, 138, 143, 0.2);
-  color: white;
-  font-size: 2em;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  width: 100%;
-}
-
-.navbar_main {
-  display: flex;
-  justify-content: center;
-  padding: 30px;
-  color: grey;
-  text-align: center;
-  font-size: 0.8em;
-}
-
-.navbar_left {
-  padding: 0;
-  background: #2f313e;
-}
-*/
 .navbar {
   flex-flow: column nowrap;
   justify-content: flex-start;

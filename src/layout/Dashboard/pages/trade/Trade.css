@@ -11,7 +11,7 @@
 }
 
 .chart_wrapper {
-  height: 85%;
+  height: calc(100% - 240px);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -87,6 +87,17 @@
   min-height: 100%;
 }
 
-.hej {
-  height: 92% !important;
+.recharts-default-tooltip {
+  background-color: #000 !important;
 }
+
+.recharts-tooltip-label {
+  color: #fff
+}
+
+ .Mui-error,
+ .Mui-error:after {
+    color: rgba(197, 35, 35, 0.753) !important;
+    border-bottom-color: rgb(197, 35, 35, 0.753) !important;
+}
+

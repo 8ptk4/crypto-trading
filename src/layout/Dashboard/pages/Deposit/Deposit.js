@@ -3,6 +3,7 @@ import { Form, Field } from "react-final-form";
 import { TextField } from "final-form-material-ui";
 import { Grid, Button } from "@material-ui/core";
 import axios from "axios";
+import "./Deposit.css";
 
 
 const validate = values => {
@@ -45,7 +46,7 @@ const Deposit = (props) => {
 
   return (
     <>
-      <div className="main_main">
+      <div className="deposit_wrapper">
         <h1>Deposit</h1>
         <Form
           onSubmit={onSubmit}

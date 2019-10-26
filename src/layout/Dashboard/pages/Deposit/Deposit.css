@@ -1,0 +1,5 @@
+.deposit_wrapper {
+  padding: 20px;
+  background: rgba(134, 54, 168, 0.98);
+  min-height: calc(100% - 70px);
+}

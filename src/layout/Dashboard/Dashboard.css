@@ -113,6 +113,10 @@ nav {
     display: none;
   }
 
+  .navbar-top {
+    margin-bottom: 0 !important;
+  }
+
   .navbar {
     flex-flow: row wrap !important;
     justify-content: space-between;
@@ -179,11 +183,19 @@ nav {
   .recharts-responsive-container {
     height: 70% !important;
   }
+  
+  .navbar-top {
+    margin-bottom: 0 !important;
+  }
 }
 
 @media screen and (max-width: 420px) {
   .panel_element_start {
     display: inline-block !important;
+  }
+
+  .navbar-top {
+    margin-bottom: 0 !important;
   }
 }
 
@@ -192,5 +204,10 @@ nav {
   .navbar-expand-md,
   .navbar-nav {
     flex-direction: column !important;
+  }
+
+    
+  .navbar-top {
+    margin-bottom: 0 !important;
   }
 }

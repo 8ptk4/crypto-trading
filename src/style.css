@@ -1,63 +1,4 @@
-
-/*
-.main,
-.history {
-  padding: 0 !important;
-}
-
-.dashboard {
-  min-height: 100vh;
-}
-
-.recharts-default-tooltip {
-  background: black !important;
-  color: white !important;
-}
-
-
-
-
-.history_element {
-  padding: 20px 20px 0 20px;
-}
-
-
-
-.currency_chart svg {
-  width: 500px !important;
-  height: 500px !important;
-}
-
-.right {
-  margin-right: 20px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.history_top {
-  background: rgba(47, 49, 62, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 2em;
-}
-
-.dashboard {
+body {
   background: transparent;
   background-image: url('./new_york.jpg');
   background-size: cover; 
@@ -67,26 +8,8 @@
   -webkit-background-size: cover;
 }
 
-.panel_wrapper {
-  background: rgba(134, 54, 168, 0.8);
-}
 
-.main_top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: white;
-  font-size: 1em;
-  padding: 40px;
-}
-
-*/
 /*
-.history_main {
-  background: rgba(47, 49, 62, 0.98);
-  color: grey;
-  overflow: hidden;
-}
 
 
 
