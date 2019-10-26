@@ -1,5 +1,11 @@
 # Crypto-trading platform
 [![Build Status](https://travis-ci.org/8ptk4/crypto-trading.svg?branch=master)](https://travis-ci.org/8ptk4/crypto-trading)
+
+Scrutinizer:
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/8ptk4/crypto-trading/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/8ptk4/crypto-trading/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/8ptk4/crypto-trading/badges/build.png?b=master)](https://scrutinizer-ci.com/g/8ptk4/crypto-trading/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/8ptk4/crypto-trading/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/8ptk4/crypto-trading/?branch=master)
+
 Kursen jsramverk på BTH, webprogrammering
 Skapad av Patrik Karlsson
 
