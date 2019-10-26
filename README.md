@@ -1,4 +1,5 @@
 # Crypto-trading platform
+[![Build Status](https://travis-ci.org/8ptk4/crypto-trading.svg?branch=master)](https://travis-ci.org/8ptk4/crypto-trading)
 Kursen jsramverk på BTH, webprogrammering
 Skapad av Patrik Karlsson
 
