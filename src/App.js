@@ -73,6 +73,7 @@ const App = props => {
     fetchHoldings()
     fetchBalance()
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storage])
 
 
