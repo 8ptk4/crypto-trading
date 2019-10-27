@@ -8,7 +8,6 @@ import axios from "axios"
 import { Container, Col, Row } from "react-bootstrap"
 
 const Trade = props => {
-  const [data, setData] = React.useState()
   const socket = socketIO(`${process.env.REACT_APP_BACKEND}/`)
   const [btc, setBtc] = React.useState(0)
   const [bc, setBc] = React.useState(0)
@@ -42,6 +41,7 @@ const Trade = props => {
     return () => {
       socket.off()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
