@@ -28,7 +28,7 @@ const Signin = ({ classes, history }) => {
   const handleSubmit = async values => {
     axios({
       method: "post",
-      url: "http://localhost:1337/account/signin",
+      url: `${process.env.REACT_APP_BACKEND}/account/signin`,
       data: values
     })
       .then(response => {

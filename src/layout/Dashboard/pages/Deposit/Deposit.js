@@ -1,24 +1,25 @@
-import React, { useState } from "react";
-import { Form, Field } from "react-final-form";
-import { TextField } from "final-form-material-ui";
-import { Grid, Button } from "@material-ui/core";
-import axios from "axios";
-import "./Deposit.css";
-
+import React, { useState } from "react"
+import { Form, Field } from "react-final-form"
+import { TextField } from "final-form-material-ui"
+import { Grid, Button } from "@material-ui/core"
+import axios from "axios"
+import "./Deposit.css"
 
 const validate = values => {
-  const errors = {};
+  const errors = {}
 
   if (!values.amount) {
-    errors.amount = "Required";
+    errors.amount = "Required"
   }
 
   if (values.amount <= 0) {
-    errors.amount = "Amount must be bigger than 0";
+    errors.amount = "Amount must be bigger than 0"
   }
 
   return errors;
 };
+
+
 
 const Deposit = (props) => {
   const [status, setStatus] = useState("")
@@ -27,7 +28,7 @@ const Deposit = (props) => {
     return new Promise(resolve => {
       axios({
         method: "post",
-        url: "http://localhost:1337/wallet/deposit",
+        url: `${process.env.REACT_APP_BACKEND}/wallet/deposit`,
         data: {
           amount: values.amount,
           user: localStorage.getItem("username")
@@ -44,6 +45,8 @@ const Deposit = (props) => {
     })
   }
 
+
+
   return (
     <>
       <div className="deposit_wrapper">
@@ -58,7 +61,7 @@ const Deposit = (props) => {
                 promise.then(() => {
                   form.reset()
                 })
-                return promise;
+                return promise
               }}
             >
               <div>
@@ -99,7 +102,7 @@ const Deposit = (props) => {
         />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Deposit;
+export default Deposit

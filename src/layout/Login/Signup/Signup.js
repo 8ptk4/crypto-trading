@@ -39,7 +39,7 @@ const Signup = ({ classes, history }) => {
     await sleep(500);
     axios({
       method: "post",
-      url: `http://localhost:1337/account/signup`,
+      url: `${process.env.REACT_APP_BACKEND}/account/signup`,
       data: values
     }).then(
       response => {

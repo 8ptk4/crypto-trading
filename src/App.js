@@ -22,8 +22,6 @@ const loadingStyle = {
   color: "lightgrey"
 }
 
-
-
 const App = props => {
   const [token, setToken] = useState(null)
   const [balance, setBalance] = useState(0)
@@ -36,7 +34,7 @@ const App = props => {
   const fetchBalance = () => {
     axios({
       method: "get",
-      url: `http://localhost:1337/wallet/balance${user}`
+      url: `${process.env.REACT_APP_BACKEND}/wallet/balance${user}`
     })
       .then(response => {
         setBalance(response.data.response.balance)
@@ -52,7 +50,7 @@ const App = props => {
     axios({
       method: "get",
       headers: { 'x-access-token': storage },
-      url: `http://localhost:1337/holdings/show`
+      url: `${process.env.REACT_APP_BACKEND}/holdings/show`
     })
       .then(response => {
         setHoldings(response.data.row)

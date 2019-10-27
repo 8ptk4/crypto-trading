@@ -8,14 +8,14 @@ const History = () => {
   const [history, setHistory] = React.useState([])
 
   React.useEffect(() => {
-    const socket = socketIO("http://localhost:1337/")
+    const socket = socketIO(`${process.env.REACT_APP_BACKEND}/`)
     socket.on('history_data', (data) => {
       setHistory(data)
     })
 
     axios({
       method: "get",
-      url: "http://localhost:1337/history/get",
+      url: `${process.env.REACT_APP_BACKEND}/history/get`,
     })
       .then(response => {
         socket.emit('history_data', response.data.response)

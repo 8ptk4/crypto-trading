@@ -2,14 +2,14 @@ import React from "react"
 import ChartcardBc from "./ChartcardBc"
 import ChartcardBtc from "./ChartcardBtc"
 import socketIO from "socket.io-client"
-import Chart from "./Chart";
+import Chart from "./Chart"
 import "./Trade.css"
-import axios from "axios";
+import axios from "axios"
 import { Container, Col, Row } from "react-bootstrap"
 
 const Trade = props => {
   const [data, setData] = React.useState()
-  const socket = socketIO("http://localhost:1337/")
+  const socket = socketIO(`${process.env.REACT_APP_BACKEND}/`)
   const [btc, setBtc] = React.useState(0)
   const [bc, setBc] = React.useState(0)
 
@@ -29,7 +29,7 @@ const Trade = props => {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:1337/crypto",
+      url: `${process.env.REACT_APP_BACKEND}/crypto`,
     })
       .then(response => {
         socket.emit('crypto_value', response.data.response)
@@ -75,41 +75,3 @@ const Trade = props => {
 };
 
 export default Trade;
-
-/*
-  const [data, setData] = React.useState()
-  const socket = socketIO("http://localhost:1337/")
-  const [btc, setBtc] = React.useState(0)
-  const [bc, setBc] = React.useState(0)
-
-
-
-  socket.on('crypto_value', (data) => {
-    const [cryptoBtc, cryptoBc] = data.map((crypto) => {
-      return crypto.value
-    })
-
-    setBtc(cryptoBtc)
-    setBc(cryptoBc)
-  })
-
-
-
-  React.useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:1337/crypto",
-    })
-      .then(response => {
-        socket.emit('crypto_value', response.data.response)
-
-      })
-      .catch(error => {
-        console.error(error)
-      });
-
-    return () => {
-      socket.off()
-    }
-  }, [])
-*/

@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   AreaChart,
   Area,
@@ -7,24 +7,38 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer
-} from 'recharts';
+} from 'recharts'
+import axios from "axios"
+import socketIO from "socket.io-client"
 
 const Chart = () => {
+  const socket = socketIO(`${process.env.REACT_APP_BACKEND}/`)
   const [data, setData] = React.useState([])
 
-  React.useEffect(() => {
-    /*
-    const socket = socketIO("http://localhost:1337/")
-    socket.on('chart_data', (data) => {
-      setData(data)
-    })
 
+
+  socket.on('chart_value', (data) => {
+    setData(data);
+  })
+
+
+
+  React.useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:1337/history/get",
+      url: `${process.env.REACT_APP_BACKEND}/chart/`,
     })
       .then(response => {
-        socket.emit('chart_data', response.data.response)
+        const display = response.data.response.slice(-6)
+        const chart_data = display.map((data) => {
+          return {
+            date: data.date.split(" ")[1],
+            btc: data.btc,
+            bc: data.bc
+          }
+        });
+        socket.emit('chart_value', chart_data)
+
       })
       .catch(error => {
         console.error(error)
@@ -33,7 +47,6 @@ const Chart = () => {
     return () => {
       socket.off()
     }
-    */
   }, [])
 
   return (
@@ -56,23 +69,23 @@ const Chart = () => {
             </linearGradient>
           </defs>
           <YAxis stroke="white" />
-          <XAxis dataKey="name" stroke="white" />
+          <XAxis dataKey="date" stroke="white" />
           <Tooltip />
           <LabelList
             className="label"
-            dataKey="name"
+            dataKey="date"
             position="insideTop"
             angle="45" />
           <Area
             type="monotone"
-            dataKey="BitCoin"
-            stroke="#82ca9d"
+            dataKey="btc"
+            stroke="#fff"
             fillOpacity={1}
             fill="url(#colorPv)" />
           <Area
             type="monotone"
-            dataKey="BitConnect"
-            stroke="#8884d8"
+            dataKey="bc"
+            stroke="#fff"
             fillOpacity={1}
             fill="url(#colorUv)" />
         </AreaChart>

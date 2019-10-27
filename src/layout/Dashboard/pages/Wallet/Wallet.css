@@ -1,6 +1,7 @@
 .wallet_wrapper {
   background: rgba(134, 54, 168, 0.98);
   min-height: calc(100% - 70px);
+  padding: 20px;
 }
 
 .container {
@@ -13,11 +14,17 @@ h1 {
 }
 
 .wallet_left {
-  background: blue;
+  background: #83ada0;
+  -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .wallet_right {
-  background: green;
+  background: #8875cf;
+  -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .wallet_inner_wrapper {

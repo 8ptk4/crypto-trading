@@ -30,7 +30,7 @@ const Chartcards = (props) => {
   const handleTransaction = (values) => {
     axios({
       method: "post",
-      url: "http://localhost:1337/holdings/transaction",
+      url: `${process.env.REACT_APP_BACKEND}/holdings/transaction`,
       data: {
         price: props.cryptoValue,
         action: values.option,
@@ -55,7 +55,7 @@ const Chartcards = (props) => {
   const handleHistory = (values) => {
     axios({
       method: "post",
-      url: "http://localhost:1337/history/add",
+      url: `${process.env.REACT_APP_BACKEND}/history/add`,
       data: {
         buyer: localStorage.getItem("username"),
         crypto: "BitCoin",

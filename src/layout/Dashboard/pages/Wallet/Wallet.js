@@ -1,6 +1,7 @@
-import React from "react";
-import "./Wallet.css";
+import React from "react"
+import "./Wallet.css"
 import { Container, Col, Row } from "react-bootstrap"
+
 const Wallet = () => {
   return (
     <>
@@ -18,6 +19,6 @@ const Wallet = () => {
 
       </Container>
     </>
-  );
-};
-export default Wallet;
+  )
+}
+export default Wallet
