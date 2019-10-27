@@ -1,5 +1,25 @@
 .wallet_wrapper {
-  padding: 20px;
   background: rgba(134, 54, 168, 0.98);
   min-height: calc(100% - 70px);
+}
+
+.container {
+  max-width: 100%;
+  height: calc(100% - 70px);
+}
+
+h1 {
+  color: white;
+}
+
+.wallet_left {
+  background: blue;
+}
+
+.wallet_right {
+  background: green;
+}
+
+.wallet_inner_wrapper {
+  height: 40%;
 }

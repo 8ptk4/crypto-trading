@@ -1,0 +1,12 @@
+filter:
+  excluded_paths: ['test/*', '.nyc_output/', 'coverage']
+
+build:
+  nodes:
+    coverage:
+      tests:
+        before:
+          - command: npm start
+            background: true
+        override:
+          - command: npm test

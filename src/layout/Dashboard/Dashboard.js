@@ -25,15 +25,3 @@ const DashboardLayout = ({ children, ...props }) => {
 };
 
 export default DashboardLayout;
-
-
-/*
-      <div className="dashboard_wrapper hbox space-between">
-        <Navbar history={children.props.history} />
-        <Panel {...props} />
-        <div className="main_wrapper">
-          {children}
-        </div>
-        <History className="history_wrapper" />
-      </div>
-*/
