@@ -25,7 +25,16 @@ const loadingStyle = {
 const App = props => {
   const [token, setToken] = useState(null)
   const [balance, setBalance] = useState(0)
-  const [holdings, setHoldings] = useState([])
+  const [holdings, setHoldings] = useState([
+    {
+      crypto: 'BitCoin',
+      amount: 0
+    },
+    {
+      crypto: 'BitConnect',
+      amount: 0
+    }
+  ])
   const storage = localStorage.getItem("token")
   const user = localStorage.getItem("username")
 
@@ -70,7 +79,6 @@ const App = props => {
     setToken(storage)
     fetchHoldings()
     fetchBalance()
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storage])
 
