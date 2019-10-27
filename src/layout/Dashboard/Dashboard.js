@@ -6,7 +6,6 @@ import Panel from "./components/Panel/Panel";
 import "./Dashboard.css";
 
 const DashboardLayout = ({ children, ...props }) => {
-  console.log("DASHBOARD", props)
   return (
     <>
       <section className="main hbox space-between">

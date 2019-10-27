@@ -23,7 +23,7 @@ const validate = values => {
   return errors;
 };
 
-const Signin = ({ classes, history }) => {
+const Signin = (props) => {
 
   const handleSubmit = async values => {
     axios({
@@ -33,7 +33,7 @@ const Signin = ({ classes, history }) => {
     })
       .then(response => {
         Auth.authenticate(response.data.hemlighet, response.data.username);
-        history.push("/dashboard/trade");
+        props.history.push("/dashboard/trade");
         window.location.reload();
       })
       .catch(error => {
@@ -48,7 +48,7 @@ const Signin = ({ classes, history }) => {
           fontSize="large"
           className="arrow_back"
           onClick={() => {
-            history.push("/");
+            props.history.push("/");
           }}
         />
       </p>

@@ -36,16 +36,15 @@ const App = props => {
     }
   ])
   const storage = localStorage.getItem("token")
-  const user = localStorage.getItem("username")
-
-
 
   const fetchBalance = () => {
     axios({
       method: "get",
-      url: `${process.env.REACT_APP_BACKEND}/wallet/balance${user}`
+      headers: { 'x-access-token': storage },
+      url: `${process.env.REACT_APP_BACKEND}/wallet/balance`
     })
       .then(response => {
+        console.log("BALANCE: ", response)
         setBalance(response.data.response.balance)
       })
       .catch(error => {
