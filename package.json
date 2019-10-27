@@ -24,7 +24,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && rsync -av build/* /var/www/crypto.putte-karlsson.me/html/"
   },
   "eslintConfig": {
     "extends": "react-app"
