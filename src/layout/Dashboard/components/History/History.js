@@ -1,15 +1,13 @@
-import React from "react"
-import { Scrollbars } from "react-custom-scrollbars";
-import "./History.css"
-import socketIO from "socket.io-client"
-import axios from "axios"
+import React from 'react'
+import { Scrollbars } from 'react-custom-scrollbars';
+import './History.css'
+import axios from 'axios'
 
-const History = () => {
+const History = (props) => {
   const [history, setHistory] = React.useState([])
 
   React.useEffect(() => {
-    const socket = socketIO(`${process.env.REACT_APP_BACKEND}/`)
-    socket.on('history_data', (data) => {
+    props.socket.on('history_data', (data) => {
       setHistory(data)
     })
 
@@ -18,14 +16,14 @@ const History = () => {
       url: `${process.env.REACT_APP_BACKEND}/history/get`,
     })
       .then(response => {
-        socket.emit('history_data', response.data.response)
+        props.socket.emit('history_data', response.data.response)
       })
       .catch(error => {
         console.error(error)
       });
 
     return () => {
-      socket.off()
+      props.socket.off()
     }
   }, [])
 

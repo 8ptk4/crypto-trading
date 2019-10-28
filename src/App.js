@@ -1,8 +1,8 @@
-import React, { lazy, Suspense, useEffect, useState } from "react"
+import React, { lazy, Suspense, useEffect, useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom"
-import axios from "axios"
-import "./style.css"
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
+import axios from 'axios'
+import './style.css'
 
 const LoginLayout = lazy(() => import("./layout/Login/Login/Login"))
 const Index = lazy(() => import("./layout/Login/Index"))
