@@ -9,48 +9,83 @@ import {
   ResponsiveContainer
 } from 'recharts'
 import axios from "axios"
-import socketIO from "socket.io-client"
+import socketIO from 'socket.io-client'
+
 
 const Chart = () => {
-  const socket = socketIO(`${process.env.REACT_APP_BACKEND}/`)
   const [data, setData] = React.useState([])
 
 
 
-  socket.on('chart_value', (data) => {
-    setData(data);
-  })
-
-
-
-  React.useEffect(() => {
+  // socket.on('chart_value', (data) => {
+  //   setData(data);
+  // })
+  const handleData = () => {
     axios({
       method: "get",
       url: `${process.env.REACT_APP_BACKEND}/chart/`,
     })
       .then(response => {
+      
         const display = response.data.response.slice(-6)
         const chart_data = display.map((data) => {
           return {
             date: data.date.split(" ")[1],
             btc: data.btc,
             bc: data.bc
-          }
+          } 
         });
-        socket.emit('chart_value', chart_data)
 
+        setData(chart_data);
+        //socket.emit('chart_value', chart_data)
+    
       })
       .catch(error => {
         console.error(error)
       });
+  }
 
+  React.useEffect(() => {
+    const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`
+    const socket = socketIO(ENDPOINT)
+
+    socket.on('history', (data) => handleData())
+    handleData()
+    return () => {
+      socket.close()
+    }
+  }, [])
+
+/*
+  React.useEffect(() => {
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_BACKEND}/chart/`,
+    })
+      .then(response => {
+      
+        const display = response.data.response.slice(-6)
+        const chart_data = display.map((data) => {
+          return {
+            date: data.date.split(" ")[1],
+            btc: data.btc,
+            bc: data.bc
+          } 
+        });
+        socket.emit('chart_value', chart_data)
+    
+      })
+      .catch(error => {
+        console.error(error)
+      });
+    
     return () => {
       socket.off()
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+*/
   return (
     <>
       <ResponsiveContainer>

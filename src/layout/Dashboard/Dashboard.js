@@ -2,17 +2,11 @@ import React from "react";
 import Navbar from "./components/navbar/Navbar";
 import History from "./components/History/History";
 import Panel from "./components/Panel/Panel";
-import socketIO from 'socket.io-client'
+
 
 import "./Dashboard.css";
 
-const DashboardLayout = ({ children, ...props }) => {
-
-  const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
-
-  React.useEffect(() => {
-    socket = io(ENDPOINT);
-  }, [ENDPOINT]);
+const DashboardLayout = ({ children, history2, ...props }) => {
 
   return (
     <>
@@ -25,7 +19,7 @@ const DashboardLayout = ({ children, ...props }) => {
           {children}
         </article>
         <aside>
-          <History socket={socket} />
+          <History history2={history2}/>
         </aside>
       </section>
     </>

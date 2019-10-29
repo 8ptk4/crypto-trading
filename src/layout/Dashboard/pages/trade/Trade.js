@@ -8,21 +8,30 @@ import axios from "axios"
 import { Container, Col, Row } from "react-bootstrap"
 
 const Trade = props => {
-  const socket = socketIO(`${process.env.REACT_APP_BACKEND}/`)
   const [btc, setBtc] = React.useState(0)
   const [bc, setBc] = React.useState(0)
+  
+  console.log("TRADE: ", props)
 
+/*
+  React.useEffect(() => {
+    const socket = socketIO(`${process.env.REACT_APP_BACKEND}/`)
 
-
-  socket.on('crypto_value', (data) => {
-    const [cryptoBtc, cryptoBc] = data.map((crypto) => {
-      return crypto.value
+    socket.on('crypto_value', (data) => {
+      console.log("heysan sveysan")
+      const [cryptoBtc, cryptoBc] = data.map((crypto) => {
+        return crypto.value
+      })
+      
+      setBtc(cryptoBtc)
+      setBc(cryptoBc)
     })
 
-    setBtc(cryptoBtc)
-    setBc(cryptoBc)
-  })
-
+    return () => {
+      socket.close()
+    }
+  }, [])
+*/
 
 
   React.useEffect(() => {
@@ -31,18 +40,26 @@ const Trade = props => {
       url: `${process.env.REACT_APP_BACKEND}/crypto`,
     })
       .then(response => {
-        socket.emit('crypto_value', response.data.response)
+
+      const [cryptoBtc, cryptoBc] = response.data.response.map((crypto) => {
+        return crypto.value
+      })
+
+      setBtc(cryptoBtc)
+      setBc(cryptoBc)
+        //socket.emit('crypto_value', response.data.response)
+
+
 
       })
       .catch(error => {
         console.error(error)
       });
+    
 
-    return () => {
-      socket.off()
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  
 
   return (
     <>

@@ -4,7 +4,7 @@ import "./Panel.css"
 import { Container, Row, Col } from "react-bootstrap"
 
 const Panel = (props) => {
-
+  console.log("Panel: ", props)
   return (
     <>
       <Container fluid>

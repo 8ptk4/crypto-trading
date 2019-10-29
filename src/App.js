@@ -1,7 +1,9 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react'
-import "bootstrap/dist/css/bootstrap.min.css"
+
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import axios from 'axios'
+import socketIO from 'socket.io-client'
+import "bootstrap/dist/css/bootstrap.min.css"
 import './style.css'
 
 const LoginLayout = lazy(() => import("./layout/Login/Login/Login"))
@@ -36,6 +38,10 @@ const App = props => {
     }
   ])
   const storage = localStorage.getItem("token")
+  const [history, setHistory] = React.useState([])
+  
+  const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
+  const socket = socketIO(ENDPOINT)
 
   const fetchBalance = () => {
     axios({
@@ -44,7 +50,6 @@ const App = props => {
       url: `${process.env.REACT_APP_BACKEND}/wallet/balance`
     })
       .then(response => {
-        console.log("BALANCE: ", response)
         setBalance(response.data.response.balance)
       })
       .catch(error => {
@@ -67,6 +72,19 @@ const App = props => {
         console.error(error)
       })
   }
+
+  React.useEffect(() => {
+    socket.on('history', (data) => {
+      console.log(history, data)
+      setHistory(prev => [data, ...prev]);
+    })
+    
+    fetch(`${process.env.REACT_APP_BACKEND}/history/get`)
+
+    return () => {
+      socket.close()
+    }
+  }, [])
 
   useEffect(() => {
     if (storage === null || storage.length === 0) {
@@ -107,6 +125,7 @@ const App = props => {
             <DashboardLayout
               balance={balance}
               holdings={holdings}
+              history2={history}
               fetchBalance={fetchBalance}
               fetchHoldings={fetchHoldings} >
               <Component {...matchProps}
@@ -167,5 +186,7 @@ const App = props => {
     </>
   )
 }
+
+
 
 export default App

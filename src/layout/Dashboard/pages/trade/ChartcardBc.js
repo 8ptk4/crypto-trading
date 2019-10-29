@@ -65,7 +65,7 @@ const Chartcards = (props) => {
       }
     })
       .then(response => {
-        console.log(response);
+        fetch(`${process.env.REACT_APP_BACKEND}/history/get`)
       })
       .catch(error => {
         console.log(error)
