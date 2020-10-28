@@ -4,7 +4,6 @@ import './History.css'
 
 
 const History = (props) => {
-  console.log("PROPS: ", props.history2.length, props.history2)
   return (
     <>
     
@@ -13,7 +12,7 @@ const History = (props) => {
       </div>
 
       <div className="history_main">
-        <Scrollbars
+        {/* <Scrollbars
           renderThumbVertical={props => (
             <div {...props} className="scrollbar-vertical" />
           )}
@@ -32,7 +31,7 @@ const History = (props) => {
             </div>
             : null
           )}
-        </Scrollbars>
+        </Scrollbars> */}
       </div>
 
     </>

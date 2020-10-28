@@ -20,6 +20,7 @@ const validate = values => {
 }
 
 const Chartcards = (props) => {
+  console.log("CHART: ", props)
   const [show, setShow] = React.useState(false);
 
   const handleClose = () => setShow(false);
@@ -43,7 +44,7 @@ const Chartcards = (props) => {
         props.fetchHoldings()
         props.fetchBalance()
 
-        handleHistory(values)
+        // handleHistory(values)
       })
       .catch(error => {
         console.error(error)
@@ -52,40 +53,40 @@ const Chartcards = (props) => {
 
 
 
-  const handleHistory = (values) => {
-    axios({
-      method: "post",
-      url: `${process.env.REACT_APP_BACKEND}/history/add`,
-      data: {
-        buyer: localStorage.getItem("username"),
-        crypto: "BitConnect",
-        action: values.option,
-        amount: values.amount,
-        price: props.cryptoValue
-      }
-    })
-      .then(response => {
-        fetch(`${process.env.REACT_APP_BACKEND}/history/get`)
-      })
-      .catch(error => {
-        console.log(error)
-      });
-  }
+  // const handleHistory = (values) => {
+  //   axios({
+  //     method: "post",
+  //     url: `${process.env.REACT_APP_BACKEND}/history/add`,
+  //     data: {
+  //       buyer: localStorage.getItem("username"),
+  //       crypto: "BitConnect",
+  //       action: values.option,
+  //       amount: values.amount,
+  //       price: props.cryptoValue
+  //     }
+  //   })
+  //     .then(response => {
+  //       fetch(`${process.env.REACT_APP_BACKEND}/history/get`)
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     });
+  // }
 
 
 
   const onSubmit = (values) => {
-    if ((values.amount * props.cryptoValue <= props.balance) && values.option === "purchased") {
-      handleTransaction(values)
-      return null
-    }
+    // if ((values.amount * props.cryptoValue <= props.balance) && values.option === "purchased") {
+    //   handleTransaction(values)
+    //   return null
+    // }
 
-    if ((values.amount <= props.holdings[1].amount) && values.option === "sold") {
-      handleTransaction(values)
-      return null
-    }
+    // if ((values.amount <= props.holdings[1].amount) && values.option === "sold") {
+    //   handleTransaction(values)
+    //   return null
+    // }
 
-    handleShow()
+    // handleShow()
   }
 
 

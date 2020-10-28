@@ -11,7 +11,7 @@ const Trade = props => {
   const [btc, setBtc] = React.useState(0)
   const [bc, setBc] = React.useState(0)
   
-  console.log("TRADE: ", props)
+  console.log("PATRIK PATRIK: ", props)
 
 /*
   React.useEffect(() => {

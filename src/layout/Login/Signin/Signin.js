@@ -4,10 +4,7 @@ import { TextField } from "final-form-material-ui";
 import { Grid, Button } from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import axios from "axios";
-
 import "./Signin.css";
-
-// Authentication
 import Auth from "../../../Auth";
 
 const validate = values => {
@@ -34,7 +31,7 @@ const Signin = (props) => {
       .then(response => {
         Auth.authenticate(response.data.hemlighet, response.data.username);
         props.history.push("/dashboard/trade");
-        window.location.reload();
+        // window.location.reload();
       })
       .catch(error => {
         console.log(error);

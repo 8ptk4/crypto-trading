@@ -41,7 +41,7 @@ const Deposit = (props) => {
         .catch(error => {
           console.log(error)
         });
-      setTimeout(resolve, 5000)
+      setTimeout(resolve, 3000)
     })
   }
 

@@ -4,6 +4,7 @@ import { TextField } from "final-form-material-ui";
 import { Grid, Button } from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import axios from "axios";
+import Auth from "../../../Auth";
 import "./Signup.css";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -35,6 +36,24 @@ const validate = values => {
 const Signup = ({ classes, history }) => {
   const [status, setStatus] = useState(" ");
 
+
+  const handleLogin = async values => {
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_BACKEND}/account/signin`,
+      data: values
+    })
+      .then(response => {
+        Auth.authenticate(response.data.hemlighet, response.data.username);
+        history.push("/dashboard/trade");
+        // window.location.reload();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+
   const handleSubmit = async values => {
     await sleep(500);
     axios({
@@ -44,9 +63,11 @@ const Signup = ({ classes, history }) => {
     }).then(
       response => {
         setStatus(response.data.response);
-        setTimeout(() => {
-          history.push("/signin");
-        }, 1500);
+        handleLogin(values);
+
+        // setTimeout(() => {
+        //   history.push("/signin");
+        // }, 1500);
       },
       error => {
         setStatus("Account couldn't be created!");

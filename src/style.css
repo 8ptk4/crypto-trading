@@ -8,6 +8,13 @@ body {
   -webkit-background-size: cover;
 }
 
+html {
+  background: #2f303e;
+}
+
+.main {
+  height: 100vh;
+}
 
 /*
 

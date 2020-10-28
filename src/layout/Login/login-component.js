@@ -1,9 +1,10 @@
-import React from "react";
+import React from 'react';
 import { Grid, Button } from "@material-ui/core";
 
-const Trade = ({ classes }) => {
-  return (
-    <>
+
+const Dashboard = props => {
+    return (
+      <section className="main hbox space-between">
       <h1>Buy, Sell and Trade Cryptocurrency </h1>
       <p>The best place to trade BitCoin and Bitconnect.</p>
       <div>
@@ -30,8 +31,8 @@ const Trade = ({ classes }) => {
           </Grid>
         </Grid>
       </div>
-    </>
-  );
-};
+      </section>
+    )
+}
 
-export default Trade;
+export default Dashboard;

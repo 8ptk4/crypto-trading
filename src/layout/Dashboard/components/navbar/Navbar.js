@@ -64,7 +64,7 @@ const Menu = ({ history }) => {
               <span className="link" onClick={() => {
                 Auth.signout()
                 history.push("/")
-                window.location.reload()
+                // window.location.reload()
               }}>
                 <span
                   className="navbar_items"

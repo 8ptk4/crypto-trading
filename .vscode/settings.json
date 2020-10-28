@@ -1,8 +1,20 @@
 {
   "workbench.colorCustomizations": {
-    "activityBar.background": "#162C5B",
-    "titleBar.activeBackground": "#1F3D7F",
-    "titleBar.activeForeground": "#F9FBFE"
+    "activityBar.background": "#162c5b",
+    "titleBar.activeBackground": "#0c1832",
+    "titleBar.activeForeground": "#e7e7e7",
+    "activityBar.activeBackground": "#162c5b",
+    "activityBar.activeBorder": "#b42b57",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#b42b57",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "statusBar.background": "#0c1832",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#162c5b",
+    "titleBar.inactiveBackground": "#0c183299",
+    "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "editor.fontFamily": "'Fira Code','Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'"
+  "editor.fontFamily": "'Fira Code','Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+  "peacock.remoteColor": "#0c1832"
 }

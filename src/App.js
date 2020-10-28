@@ -1,191 +1,41 @@
-import React, { lazy, Suspense, useEffect, useState } from 'react'
-
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
-import axios from 'axios'
-import socketIO from 'socket.io-client'
-import "bootstrap/dist/css/bootstrap.min.css"
+import React, { lazy, Suspense } from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import DashboardRoutes from './layout/Dashboard/dashboard-routes';
+import LoginRoutes from './layout/Login/login-routes';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './style.css'
+import { loadingStyle, loadingIconStyle } from './style';
 
-const LoginLayout = lazy(() => import("./layout/Login/Login/Login"))
-const Index = lazy(() => import("./layout/Login/Index"))
-const Signup = lazy(() => import("./layout/Login/Signup/Signup"))
-const Signin = lazy(() => import("./layout/Login/Signin/Signin"))
-const DashboardLayout = lazy(() => import("./layout/Dashboard/Dashboard"))
-const Trade = lazy(() => import("./layout/Dashboard/pages/trade/Trade"))
-const Wallet = lazy(() => import("./layout/Dashboard/pages/Wallet/Wallet"))
-const Deposit = lazy(() => import("./layout/Dashboard/pages/Deposit/Deposit"))
+const Index = lazy(() => import("./layout/Login/Index"));
+const Signup = lazy(() => import("./layout/Login/Signup/Signup"));
+const Signin = lazy(() => import("./layout/Login/Signin/Signin"));
+const Trade = lazy(() => import("./layout/Dashboard/pages/trade/Trade"));
+const Wallet = lazy(() => import("./layout/Dashboard/pages/Wallet/Wallet"));
+const Deposit = lazy(() => import("./layout/Dashboard/pages/Deposit/Deposit"));
+const NoMatch = lazy(() => import("./404"));
+""
 
-const loadingStyle = {
-  height: "100vh",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  background: "#2f303e",
-  color: "lightgrey"
-}
-
-const App = props => {
-  const [token, setToken] = useState(null)
-  const [balance, setBalance] = useState(0)
-  const [holdings, setHoldings] = useState([
-    {
-      crypto: 'BitCoin',
-      amount: 0
-    },
-    {
-      crypto: 'BitConnect',
-      amount: 0
-    }
-  ])
-  const storage = localStorage.getItem("token")
-  const [history, setHistory] = React.useState([])
-  
-  const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
-  const socket = socketIO(ENDPOINT)
-
-  const fetchBalance = () => {
-    axios({
-      method: "get",
-      headers: { 'x-access-token': storage },
-      url: `${process.env.REACT_APP_BACKEND}/wallet/balance`
-    })
-      .then(response => {
-        setBalance(response.data.response.balance)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
-
-
-
-  const fetchHoldings = () => {
-    axios({
-      method: "get",
-      headers: { 'x-access-token': storage },
-      url: `${process.env.REACT_APP_BACKEND}/holdings/show`
-    })
-      .then(response => {
-        setHoldings(response.data.row)
-      })
-      .catch(error => {
-        console.error(error)
-      })
-  }
-
-  React.useEffect(() => {
-    socket.on('history', (data) => {
-      console.log(history, data)
-      setHistory(prev => [data, ...prev]);
-    })
-    
-    fetch(`${process.env.REACT_APP_BACKEND}/history/get`)
-
-    return () => {
-      socket.close()
-    }
-  }, [])
-
-  useEffect(() => {
-    if (storage === null || storage.length === 0) {
-      setToken(null)
-
-      return
-    }
-
-    setToken(storage)
-    fetchHoldings()
-    fetchBalance()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storage])
-
-
-
-  const LoginLayoutRoute = ({ component: Component, ...rest }) => {
-    return (
-      <Route
-        {...rest}
-        render={matchProps =>
-          <LoginLayout>
-            <Component {...matchProps} />
-          </LoginLayout>
-        }
-      />
-    )
-  }
-
-
-
-  const DashboardLayoutRoute = ({ component: Component, ...rest }) => {
-    return (
-      <Route
-        {...rest}
-        render={matchProps =>
-          token ? (
-            <DashboardLayout
-              balance={balance}
-              holdings={holdings}
-              history2={history}
-              fetchBalance={fetchBalance}
-              fetchHoldings={fetchHoldings} >
-              <Component {...matchProps}
-                balance={balance}
-                holdings={holdings}
-                fetchBalance={fetchBalance}
-                fetchHoldings={fetchHoldings} />
-            </DashboardLayout>
-          ) : (
-              <Redirect
-                to={"/"}
-              />
-            )
-        }
-      />
-    )
-  }
-
-
-
-  return (
-    <>
-      <BrowserRouter>
-        <Suspense fallback={
-          <div style={loadingStyle}>
-            <h1>Loading...</h1>
-          </div>
-        }>
-          <Switch>
-            {!token ? (
-              <>
-                <LoginLayoutRoute
-                  path="/" exact
-                  component={Index} />
-                <LoginLayoutRoute
-                  path="/signup"
-                  component={Signup} />
-                <LoginLayoutRoute
-                  path="/signin"
-                  component={Signin} />
-              </>
-            ) : (
-                <>
-                  <DashboardLayoutRoute
-                    path="/dashboard/trade"
-                    component={Trade} balance={balance} />
-                  <DashboardLayoutRoute
-                    path="/dashboard/wallet"
-                    component={Wallet} />
-                  <DashboardLayoutRoute
-                    path="/dashboard/deposit"
-                    component={Deposit} />
-                </>
-              )}
-          </Switch>
-        </Suspense>
-      </BrowserRouter>
-    </>
-  )
-}
+const App = () => (
+    <BrowserRouter>
+      <Suspense fallback={
+        <div style={loadingStyle}>
+          <h6>Loading... </h6>
+          <CircularProgress style={loadingIconStyle} />
+        </div>
+      }>
+        <Switch>
+          <LoginRoutes path="/" exact component={Index} />
+          <LoginRoutes path="/signup" component={Signup} />
+          <LoginRoutes path="/signin" component={Signin} />
+          <DashboardRoutes path="/dashboard/trade" component={Trade} />
+          <DashboardRoutes path="/dashboard/wallet" component={Wallet} />
+          <DashboardRoutes path="/dashboard/deposit" component={Deposit} />
+          <Route component={NoMatch} />
+        </Switch>
+      </Suspense>
+    </BrowserRouter>
+)
 
 
 
