@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.5.0",
     "@material-ui/icons": "^4.4.3",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "final-form": "^4.18.5",
     "final-form-material-ui": "^0.3.0",
@@ -17,17 +17,19 @@
     "react-dom": "^16.10.2",
     "react-final-form": "^6.3.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
+    "react-scripts": "^3.4.4",
     "recharts": "^1.8.3",
     "socket.io-client": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start --watch",
-    "lint": "eslint -c eslintrc src",
+    "serve": "react-scripts start --watch",
+    "start": "CHOKIDAR_USEPOLLING=true npm run serve",
+    "lint": "eslint -c eslintrc src; exit 0",
+    "fix": "eslint -c eslintrc src --fix; exit 0",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && rsync -av build/* /var/www/crypto.putte-karlsson.me/html/"
+    "deploy": "npm run build --prod && rsync -av build/* root@puttekarlsson.com:/var/www/puttekarlsson.com/html/"
   },
   "eslintConfig": {
     "extends": "react-app"

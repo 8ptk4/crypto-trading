@@ -1,6 +1,6 @@
-import React from "react"
-import "./Wallet.css"
-import { Container, Col, Row } from "react-bootstrap"
+import React from 'react';
+import './Wallet.css';
+import { Container, Col, Row } from 'react-bootstrap';
 
 const Wallet = () => {
   return (
@@ -10,15 +10,15 @@ const Wallet = () => {
         <Row className="wallet_inner_wrapper">
           <Col md={{ span: 4, offset: 1 }} className="wallet_left">
             Heysan
-        </Col>
+          </Col>
 
           <Col md={{ span: 4, offset: 2 }} className="wallet_right">
             Sveysan
-        </Col>
+          </Col>
         </Row>
 
       </Container>
     </>
-  )
-}
-export default Wallet
+  );
+};
+export default Wallet;

@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import AllInclusiveIcon from "@material-ui/icons/AllInclusive";
-import { Container, Row, Col } from "react-bootstrap";
-import "./Login.css";
+import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
+import { Container, Row, Col } from 'react-bootstrap';
+import './Login.css';
 
 const LoginLayout = ({ children }) => {
   return (

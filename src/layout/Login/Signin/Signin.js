@@ -1,20 +1,20 @@
-import React from "react";
-import { Form, Field } from "react-final-form";
-import { TextField } from "final-form-material-ui";
-import { Grid, Button } from "@material-ui/core";
-import ArrowBack from "@material-ui/icons/ArrowBack";
-import axios from "axios";
-import "./Signin.css";
-import Auth from "../../../Auth";
+import React from 'react';
+import { Form, Field } from 'react-final-form';
+import { TextField } from 'final-form-material-ui';
+import { Grid, Button } from '@material-ui/core';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import axios from 'axios';
+import './Signin.css';
+import Auth from '../../../Auth';
 
 const validate = values => {
   const errors = {};
 
   if (!values.email) {
-    errors.email = "Required";
+    errors.email = 'Required';
   }
   if (!values.password) {
-    errors.password = "Required";
+    errors.password = 'Required';
   }
 
   return errors;
@@ -24,13 +24,13 @@ const Signin = (props) => {
 
   const handleSubmit = async values => {
     axios({
-      method: "post",
+      method: 'post',
       url: `${process.env.REACT_APP_BACKEND}/account/signin`,
       data: values
     })
       .then(response => {
         Auth.authenticate(response.data.hemlighet, response.data.username);
-        props.history.push("/dashboard/trade");
+        props.history.push('/dashboard/trade');
         // window.location.reload();
       })
       .catch(error => {
@@ -45,7 +45,7 @@ const Signin = (props) => {
           fontSize="large"
           className="arrow_back"
           onClick={() => {
-            props.history.push("/");
+            props.history.push('/');
           }}
         />
       </p>

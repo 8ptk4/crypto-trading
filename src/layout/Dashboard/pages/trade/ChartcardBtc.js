@@ -1,92 +1,108 @@
-import React from "react"
-import axios from "axios"
-import { Form, Field } from "react-final-form"
-import { TextField } from "final-form-material-ui"
-import { Button } from "@material-ui/core"
-import { Col, Modal } from "react-bootstrap"
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Form, Field } from 'react-final-form';
+import { TextField } from 'final-form-material-ui';
+import { Button } from '@material-ui/core';
+import { Col, Modal } from 'react-bootstrap';
+import socketIO from 'socket.io-client';
 
 const validate = values => {
-  const errors = {}
+  const errors = {};
 
   if (!values.amount) {
-    errors.amount = "Required"
+    errors.amount = 'Required';
   }
 
   if (values.amount < 0 || !values.amount) {
-    errors.amount = "Input not accepted"
+    errors.amount = 'Input not accepted';
   }
 
-  return errors
-}
+  return errors;
+};
 
 const Chartcards = (props) => {
-  const [show, setShow] = React.useState(false);
-
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  const [btc, setBtc] = useState(0);
+  
 
 
   const handleTransaction = (values) => {
     axios({
-      method: "post",
+      method: 'post',
       url: `${process.env.REACT_APP_BACKEND}/holdings/transaction`,
       data: {
-        price: props.cryptoValue,
+        price: btc,
         action: values.option,
-        crypto: "BitCoin",
+        crypto: 'BitCoin',
         amount: values.amount,
-        account: localStorage.getItem("username")
+        account: localStorage.getItem('username')
       }
-    })
-      .then(response => {
-        props.fetchHoldings()
-        props.fetchBalance()
+    }).then(response => {
+      props.fetchHoldings();
+      props.fetchBalance();
+      handleHistory(values);
+    }).catch(error => {
+      console.error(error);
+    });
+  };
 
-        // handleHistory(values)
-      })
-      .catch(error => {
-        console.error(error)
-      });
+
+
+  const handleHistory = (values) => {
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_BACKEND}/history/add`,
+      data: {
+        buyer: localStorage.getItem("username"),
+        crypto: "BitCoin",
+        action: values.option,
+        amount: values.amount,
+        price: btc
+      }
+    }).then(response => {
+      fetch(`${process.env.REACT_APP_BACKEND}/history/get`)
+      fetchCrypto();
+    }).catch(error => {
+      console.log(error)
+    });
   }
 
 
 
-  // const handleHistory = (values) => {
-  //   axios({
-  //     method: "post",
-  //     url: `${process.env.REACT_APP_BACKEND}/history/add`,
-  //     data: {
-  //       buyer: localStorage.getItem("username"),
-  //       crypto: "BitCoin",
-  //       action: values.option,
-  //       amount: values.amount,
-  //       price: props.cryptoValue
-  //     }
-  //   })
-  //     .then(response => {
-  //       fetch(`${process.env.REACT_APP_BACKEND}/history/get`)
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     });
-  // }
-
-
-
-  const onSubmit = (values) => {
-    // if ((values.amount * props.cryptoValue <= props.balance) && values.option === "purchased") {
-    //   handleTransaction(values)
-    //   return null
-    // }
-
-    // if ((values.amount <= props.holdings[0].amount) && values.option === "sold") {
-    //   handleTransaction(values)
-    //   return null
-    // }
-
-    // handleShow()
+  const fetchCrypto = () => {
+    fetch(`${process.env.REACT_APP_BACKEND}/crypto`)
   }
+
+
+
+  useEffect(() => {
+    const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
+    const socket = socketIO(ENDPOINT);
+    fetchCrypto();
+    socket.on('crypto', (data) => {
+      setBtc(data[0].value);
+    });
+    return () => {
+      socket.close();
+    };
+  }, []);
+
+
+
+  const onSubmit = async (values) => {
+    if ((values.amount * btc <= props.balance) && values.option === "purchased") {
+      handleTransaction(values)
+      return null
+    }
+
+    if ((values.amount <= props.holdings[0].amount) && values.option === "sold") {
+      handleTransaction(values)
+      return null
+    }
+    handleShow()
+  };
 
 
 
@@ -98,11 +114,11 @@ const Chartcards = (props) => {
         </Modal.Header>
         <Modal.Body></Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button onClick={handleClose}>
             Close
           </Button>
-          <Button variant="secondary" onClick={() => {
-            props.history.push("/dashboard/deposit");
+          <Button onClick={() => {
+            props.history.push('/dashboard/deposit');
           }}>
             Add founds
           </Button>
@@ -113,7 +129,7 @@ const Chartcards = (props) => {
         <div className="chartcard_first">
           <div className="chartcard_top">
             <span className="chartcard_title">BitCoin</span>
-            <span className="chartcard_value">{props.cryptoValue} Kr</span>
+            <span className="chartcard_value">{btc} Kr</span>
           </div>
 
           <div className="chartcard_bottom">
@@ -123,7 +139,10 @@ const Chartcards = (props) => {
               render={({ handleSubmit, values, submitting, pristine, form }) => (
                 <form
                   className="chartcard_form"
-                  onSubmit={handleSubmit}
+                  onSubmit={ async values => {
+                    await handleSubmit(values)
+                    form.reset();
+                  }}
                 >
 
                   <div>
@@ -147,12 +166,12 @@ const Chartcards = (props) => {
                         className="primary_button"
                         type="submit"
                         onClick={() => {
-                          form.change("option", "sold");
+                          form.change('option', 'sold');
                         }}
                         disabled={submitting || pristine}
                       >
                         Sell
-                        </Button>
+                      </Button>
                     </span>
 
                     <span>
@@ -162,12 +181,12 @@ const Chartcards = (props) => {
                         className="primary_button"
                         type="submit"
                         onClick={() => {
-                          form.change("option", "purchased");
+                          form.change('option', 'purchased');
                         }}
                         disabled={submitting || pristine}
                       >
                         Buy
-                        </Button>
+                      </Button>
                     </span>
                   </div>
                 </form>

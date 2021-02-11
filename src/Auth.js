@@ -1,17 +1,17 @@
 const Auth = {
   isAuthenticated: false,
-  token: "",
+  token: '',
 
   authenticate(token, email) {
-    localStorage.setItem("token", token);
-    localStorage.setItem("username", email);
+    localStorage.setItem('token', token);
+    localStorage.setItem('username', email);
     this.token = token;
     this.isAuthenticated = true;
   },
 
   signout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
 
     this.isAuthenticated = false;
   },

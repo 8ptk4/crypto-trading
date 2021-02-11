@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import AllInclusiveIcon from "@material-ui/icons/AllInclusive";
-import { Container, Row, Col } from "react-bootstrap";
-import "./Login.css";
+import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
+import { Container, Row, Col } from 'react-bootstrap';
+import './Login.css';
 
 const LoginRoutes = ({ component: Component, ...rest }) => {
-  if (!localStorage.getItem("token")) {
+  if (!localStorage.getItem('token')) {
     return (
       <Route {...rest} render={props => (
         <Container fluid>
@@ -19,11 +19,11 @@ const LoginRoutes = ({ component: Component, ...rest }) => {
           </Row>
         </Container>
       )} />
-    )
+    );
   }
 
-  return <Redirect to='/dashboard/trade' />
+  return <Redirect to='/dashboard/trade' />;
 
-}
+};
 
 export default LoginRoutes;

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from 'react';
 import {
   AreaChart,
   Area,
@@ -7,85 +7,48 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer
-} from 'recharts'
-import axios from "axios"
-import socketIO from 'socket.io-client'
+} from 'recharts';
+import axios from 'axios';
+import socketIO from 'socket.io-client';
 
 
 const Chart = () => {
-  const [data, setData] = React.useState([])
+  const [data, setData] = React.useState([]);
 
 
 
-  // socket.on('chart_value', (data) => {
-  //   setData(data);
-  // })
   const handleData = () => {
     axios({
-      method: "get",
+      method: 'get',
       url: `${process.env.REACT_APP_BACKEND}/chart/`,
-    })
-      .then(response => {
-      
-        const display = response.data.response.slice(-6)
-        const chart_data = display.map((data) => {
-          return {
-            date: data.date.split(" ")[1],
-            btc: data.btc,
-            bc: data.bc
-          } 
-        });
-
-        setData(chart_data);
-        //socket.emit('chart_value', chart_data)
-    
-      })
-      .catch(error => {
-        console.error(error)
+    }).then(response => {
+      const display = response.data.response.slice(-6);
+      const chart_data = display.map((data) => {
+        return {
+          date: data.date.split(' ')[1],
+          btc: data.btc,
+          bc: data.bc
+        }; 
       });
-  }
+      setData(chart_data);    
+    }).catch(error => {
+      console.error(error);
+    });
+  };
 
-  React.useEffect(() => {
-    const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`
-    const socket = socketIO(ENDPOINT)
 
-    socket.on('history', (data) => handleData())
-    handleData()
+
+  useEffect(() => {
+    const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
+    const socket = socketIO(ENDPOINT);
+
+    socket.on('history', (data) => handleData());
+    handleData();
     return () => {
-      socket.close()
-    }
-  }, [])
+      socket.close();
+    };
+  }, []);
 
-/*
-  React.useEffect(() => {
-    axios({
-      method: "get",
-      url: `${process.env.REACT_APP_BACKEND}/chart/`,
-    })
-      .then(response => {
-      
-        const display = response.data.response.slice(-6)
-        const chart_data = display.map((data) => {
-          return {
-            date: data.date.split(" ")[1],
-            btc: data.btc,
-            bc: data.bc
-          } 
-        });
-        socket.emit('chart_value', chart_data)
-    
-      })
-      .catch(error => {
-        console.error(error)
-      });
-    
-    return () => {
-      socket.off()
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-*/
   return (
     <>
       <ResponsiveContainer>

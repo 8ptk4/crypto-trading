@@ -1,51 +1,51 @@
-import React, { useState } from "react";
-import { Form, Field } from "react-final-form";
-import { TextField } from "final-form-material-ui";
-import { Grid, Button } from "@material-ui/core";
-import ArrowBack from "@material-ui/icons/ArrowBack";
-import axios from "axios";
-import Auth from "../../../Auth";
-import "./Signup.css";
+import React, { useState } from 'react';
+import { Form, Field } from 'react-final-form';
+import { TextField } from 'final-form-material-ui';
+import { Grid, Button } from '@material-ui/core';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import axios from 'axios';
+import Auth from '../../../Auth';
+import './Signup.css';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const validate = values => {
   const errors = {};
   if (!values.firstName) {
-    errors.firstName = "Required";
+    errors.firstName = 'Required';
   }
   if (!values.lastName) {
-    errors.lastName = "Required";
+    errors.lastName = 'Required';
   }
   if (!values.email) {
-    errors.email = "Required";
+    errors.email = 'Required';
   }
   if (!values.password) {
-    errors.password = "Required";
+    errors.password = 'Required';
   }
   if (!values.verifyPassword) {
-    errors.verifyPassword = "Required";
+    errors.verifyPassword = 'Required';
   }
   if (values.password !== values.verifyPassword) {
-    errors.password = "Passwords doesn't match";
-    errors.verifyPassword = "Passwords doesn't match";
+    errors.password = 'Passwords doesn\'t match';
+    errors.verifyPassword = 'Passwords doesn\'t match';
   }
   return errors;
 };
 
 const Signup = ({ classes, history }) => {
-  const [status, setStatus] = useState(" ");
+  const [status, setStatus] = useState(' ');
 
 
   const handleLogin = async values => {
     axios({
-      method: "post",
+      method: 'post',
       url: `${process.env.REACT_APP_BACKEND}/account/signin`,
       data: values
     })
       .then(response => {
         Auth.authenticate(response.data.hemlighet, response.data.username);
-        history.push("/dashboard/trade");
+        history.push('/dashboard/trade');
         // window.location.reload();
       })
       .catch(error => {
@@ -57,7 +57,7 @@ const Signup = ({ classes, history }) => {
   const handleSubmit = async values => {
     await sleep(500);
     axios({
-      method: "post",
+      method: 'post',
       url: `${process.env.REACT_APP_BACKEND}/account/signup`,
       data: values
     }).then(
@@ -70,7 +70,7 @@ const Signup = ({ classes, history }) => {
         // }, 1500);
       },
       error => {
-        setStatus("Account couldn't be created!");
+        setStatus('Account couldn\'t be created!');
       }
     );
   };
@@ -82,7 +82,7 @@ const Signup = ({ classes, history }) => {
           fontSize="large"
           className="arrow_back"
           onClick={() => {
-            history.push("/");
+            history.push('/');
           }}
         />
       </p>

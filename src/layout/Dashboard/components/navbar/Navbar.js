@@ -1,27 +1,27 @@
-import React from "react"
+import React from 'react';
 
 // Bootstrap
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom';
 
 // Material Design icons
-import AccountBalanceWalletOutlinedIcon from "@material-ui/icons/AccountBalanceWalletOutlined"
-import RemoveFromQueueIcon from "@material-ui/icons/RemoveFromQueue"
-import ExitToAppIcon from "@material-ui/icons/ExitToApp"
-import AllInclusiveIcon from "@material-ui/icons/AllInclusive"
+import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
+import RemoveFromQueueIcon from '@material-ui/icons/RemoveFromQueue';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 
-import Nav from 'react-bootstrap/Nav'
-import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 // Authentication
-import Auth from "../../../../Auth"
+import Auth from '../../../../Auth';
 
 // Styles
-import "./Navbar.css"
+import './Navbar.css';
 
 const Menu = ({ history }) => {
   return (
     <>
-      <Navbar bg="light" expand="md">
+      <Navbar expand="md">
         <div className="navbar_top">
           <Navbar.Brand to="/dashboard/trade">
             <Link to="/dashboard/trade">
@@ -62,8 +62,8 @@ const Menu = ({ history }) => {
 
             <Nav className="align_bottom">
               <span className="link" onClick={() => {
-                Auth.signout()
-                history.push("/")
+                Auth.signout();
+                history.push('/');
                 // window.location.reload()
               }}>
                 <span
@@ -81,7 +81,7 @@ const Menu = ({ history }) => {
         </Navbar.Collapse>
       </Navbar>
     </>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;
