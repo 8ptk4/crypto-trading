@@ -25,17 +25,19 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
   ]);
 
 
-  const storage = localStorage.getItem('token');
 
+  const storage = localStorage.getItem('token');
   const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
   const socket = socketIO(ENDPOINT)
 
 
 
   useEffect(() => {
+    console.log("hej")
     socket.on('history', (data) => {
-      console.log("history")
+      console.log("arsle")
       setHistory(prev => [data, ...prev]);
+      console.log("hejsan");
     })
     
     return () => {
@@ -59,6 +61,20 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
 
 
 
+  const fetchHistory = () => {
+    axios({
+      method: 'get',
+      headers: { 'x-access-token': storage },
+      url: `${process.env.REACT_APP_BACKEND}/history/test`
+    }).then(response => {
+      console.log("apa", response.data)
+    }).catch(error => {
+      console.log(error);
+    });
+  };
+
+
+
   const fetchHoldings = () => {
     axios({
       method: "get",
@@ -74,6 +90,7 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
   useEffect(() => {
     fetchBalance();
     fetchHoldings();
+    fetchHistory();
     
     console.log("BALANCE: ", balance)
   }, [storage]);

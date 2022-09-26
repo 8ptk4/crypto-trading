@@ -4,6 +4,7 @@ import './History.css';
 
 
 const History = (props) => {
+
   return (
     <>
       <div className="history_top">
@@ -17,9 +18,7 @@ const History = (props) => {
               <div key={i} className="history_element">
                 <h5>{message.firstname + ' ' + message.lastname}</h5>
                 <p>
-                  <span
-                    className={message.action
-                      === "sold" ? "title_sold" : "title_purchased"}>
+                  <span className={message.action === "sold" ? "title_sold" : "title_purchased"}>
                     {message.action.toUpperCase()}
                   </span> {message.date.split(" ")[1]} </p>
                 < span > {message.amount} {message.currency}</span>

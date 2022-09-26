@@ -1,8 +1,14 @@
 .chartcard_container {
   padding: 20px;
-  background: rgba(134, 54, 168, 0.98);
+  background: rgba(134, 54, 168, 0.95);
   min-height: calc(100% - 70px);
   height: 170px;
+}
+
+.error_msg {
+  color: rgb(124, 65, 65);
+  display: grid;
+  font-size: 0.9em;
 }
 
 .chart_container {
@@ -101,3 +107,6 @@
     border-bottom-color: rgb(197, 35, 35, 0.753) !important;
 }
 
+
+.MuiFormHelperText-root {
+}

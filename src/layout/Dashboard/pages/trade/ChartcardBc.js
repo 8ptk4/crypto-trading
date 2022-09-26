@@ -3,32 +3,30 @@ import axios from 'axios';
 import { Form, Field } from 'react-final-form';
 import { TextField } from 'final-form-material-ui';
 import { Button } from '@material-ui/core';
-import { Col, Modal } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import socketIO from 'socket.io-client';
 
 
-const validate = values => {
-  const errors = {};
-
-  if (!values.amount) {
-    errors.amount = 'Required';
-  }
-
-  if (values.amount < 0 || !values.amount) {
-    errors.amount = 'Input not accepted';
-  }
-
-  return errors;
-};
 
 const Chartcards = (props) => {
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [bc, setBc] = useState(0);
+
+
+
+  const parse = value => (isNaN(parseFloat(value)) ? "" : parseFloat(value));
+  const required = value => (value ? undefined : 'Required')
+  const sellError = value => (value <= props.holdings[1].amount ? 
+    undefined : 
+    `Can sell ${props.holdings[1].amount}`
+  );
+  const buyError = value => (value * bc <= props.balance ? 
+    undefined : 
+    `Can buy ${Math.floor(props.balance / bc)}`
+  );
+
   
-
-
 
   const handleTransaction = (values) => {
     axios({
@@ -99,35 +97,16 @@ const Chartcards = (props) => {
       return null
     }
 
-    console.log(values.amount, props.holdings[1].amount, values.option)
     if ((values.amount <= props.holdings[1].amount) && values.option === "sold") {
       handleTransaction(values)
       return null
     }
-
-    handleShow()
   };
+
 
 
   return (
     <>
-      <Modal show={show} onHide={handleClose} animation={false}>
-        <Modal.Header closeButton>
-          <Modal.Title>Insufficient Founds</Modal.Title>
-        </Modal.Header>
-        <Modal.Body></Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleClose}>
-            Close
-          </Button>
-          <Button onClick={() => {
-            props.history.push('/dashboard/deposit');
-          }}>
-            Add founds
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
       <Col sx={6}>
         <div className="chartcard_second">
           <div className="chartcard_top">
@@ -138,14 +117,14 @@ const Chartcards = (props) => {
           <div className="chartcard_bottom">
             <Form
               onSubmit={onSubmit}
-              validate={validate}
-              render={({ handleSubmit, values, submitting, pristine, form }) => (
+              allowNegative={false}
+              render={({ handleSubmit, values, submitting, pristine, form, errors}) => (
                 <form
-                  className="chartcard_form"
-                  onSubmit={ async values => {
-                    await handleSubmit(values)
-                    form.reset();
-                  }}
+                className="chartcard_form"
+                onSubmit={ async values => {
+                  await handleSubmit(values)
+                  form.reset();
+                }}
                 >
 
                   <div>
@@ -155,11 +134,19 @@ const Chartcards = (props) => {
                       fullWidth
                       required
                       component={TextField}
-                      type="number"
+                      type="text"
                       label="Amount"
                       autoComplete="off"
+                      parse={parse}
                     />
                   </div>
+
+                    { values.amount &&
+                      <div className="error_msg">
+                        <span>{sellError(values.amount)}</span>
+                        <span>{buyError(values.amount)}</span>
+                      </div> 
+                    }
 
                   <div className="chartcard_buttons">
                     <span>
@@ -171,7 +158,7 @@ const Chartcards = (props) => {
                         onClick={() => {
                           form.change('option', 'sold');
                         }}
-                        disabled={submitting || pristine}
+                        disabled={submitting || pristine || sellError(values.amount) }
                       >
                         Sell
                       </Button>
@@ -186,7 +173,7 @@ const Chartcards = (props) => {
                         onClick={() => {
                           form.change('option', 'purchased');
                         }}
-                        disabled={submitting || pristine}
+                        disabled={submitting || pristine || buyError(values.amount)}
                       >
                         Buy
                       </Button>

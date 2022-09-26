@@ -6,19 +6,7 @@ import { Button } from '@material-ui/core';
 import { Col, Modal } from 'react-bootstrap';
 import socketIO from 'socket.io-client';
 
-const validate = values => {
-  const errors = {};
 
-  if (!values.amount) {
-    errors.amount = 'Required';
-  }
-
-  if (values.amount < 0 || !values.amount) {
-    errors.amount = 'Input not accepted';
-  }
-
-  return errors;
-};
 
 const Chartcards = (props) => {
   const [show, setShow] = useState(false);
@@ -26,6 +14,19 @@ const Chartcards = (props) => {
   const handleShow = () => setShow(true);
   const [btc, setBtc] = useState(0);
   
+
+
+  const parse = value => (isNaN(parseFloat(value)) ? "" : parseFloat(value));
+  const required = value => (value ? undefined : 'Required')
+  const sellError = value => (value <= props.holdings[0].amount ? 
+    undefined : 
+    `Can sell ${props.holdings[0].amount}`
+  );
+  const buyError = value => (value * btc <= props.balance ? 
+    undefined : 
+    `Can buy ${Math.floor(props.balance / btc)}`
+  );
+
 
 
   const handleTransaction = (values) => {
@@ -108,7 +109,7 @@ const Chartcards = (props) => {
 
   return (
     <>
-      <Modal show={show} onHide={handleClose} animation={false}>
+      {/* <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Insufficient Founds</Modal.Title>
         </Modal.Header>
@@ -123,7 +124,7 @@ const Chartcards = (props) => {
             Add founds
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
 
       <Col sx={6}>
         <div className="chartcard_first">
@@ -135,11 +136,10 @@ const Chartcards = (props) => {
           <div className="chartcard_bottom">
             <Form
               onSubmit={onSubmit}
-              validate={validate}
-              render={({ handleSubmit, values, submitting, pristine, form }) => (
+              render={({ handleSubmit, values, submitting, pristine, form, errors }) => (
                 <form
                   className="chartcard_form"
-                  onSubmit={ async values => {
+                  onSubmit={ async (values) => {
                     await handleSubmit(values)
                     form.reset();
                   }}
@@ -150,45 +150,53 @@ const Chartcards = (props) => {
                       className="label"
                       name="amount"
                       fullWidth
-                      required
                       component={TextField}
-                      type="number"
+                      type="text"
                       label="Amount"
                       autoComplete="off"
+                      parse={parse}
                     />
                   </div>
+                  
+                    { values.amount &&
+                      <div className="error_msg">
+                        <span>{sellError(values.amount)}</span>
+                        <span>{buyError(values.amount)}</span>
+                      </div> 
+                    }
 
-                  <div className="chartcard_buttons">
-                    <span>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className="primary_button"
-                        type="submit"
-                        onClick={() => {
-                          form.change('option', 'sold');
-                        }}
-                        disabled={submitting || pristine}
-                      >
-                        Sell
-                      </Button>
-                    </span>
+                    <div className="chartcard_buttons">
+                      <span>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          className="primary_button"
+                          type="submit"
+                          onClick={() => {
+                            form.change('option', 'sold');
+                          }}
+                          disabled={submitting || pristine || !values.amount || sellError(values.amount)}
+                        >
+                          Sell
+                        </Button>
+                      </span>
 
-                    <span>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className="primary_button"
-                        type="submit"
-                        onClick={() => {
-                          form.change('option', 'purchased');
-                        }}
-                        disabled={submitting || pristine}
-                      >
-                        Buy
-                      </Button>
-                    </span>
-                  </div>
+                      <span>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          className="primary_button"
+                          type="submit"
+                          onClick={() => {
+                            errors = {};
+                            form.change('option', 'purchased');
+                          }}
+                          disabled={submitting || pristine || !values.amount || buyError(values.amount)}
+                        >
+                          Buy
+                        </Button>
+                      </span>
+                    </div>
                 </form>
               )}
             />
