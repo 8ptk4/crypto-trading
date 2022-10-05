@@ -5,18 +5,11 @@ import { TextField } from 'final-form-material-ui';
 import { Button } from '@material-ui/core';
 import { Col } from 'react-bootstrap';
 import socketIO from 'socket.io-client';
-
-
+const storage = localStorage.getItem('token');
 
 const Chartcards = (props) => {
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
   const [bc, setBc] = useState(0);
-
-
-
   const parse = value => (isNaN(parseFloat(value)) ? "" : parseFloat(value));
-  const required = value => (value ? undefined : 'Required')
   const sellError = value => (value <= props.holdings[1].amount ? 
     undefined : 
     `Can sell ${props.holdings[1].amount}`
@@ -26,11 +19,10 @@ const Chartcards = (props) => {
     `Can buy ${Math.floor(props.balance / bc)}`
   );
 
-  
-
   const handleTransaction = (values) => {
     axios({
       method: 'post',
+      headers: { 'x-access-token': storage },
       url: `${process.env.REACT_APP_BACKEND}/holdings/transaction`,
       data: {
         price: bc,
@@ -48,11 +40,10 @@ const Chartcards = (props) => {
     });
   };
 
-
-
   const handleHistory = (values) => {
     axios({
       method: "post",
+      headers: { 'x-access-token': storage },
       url: `${process.env.REACT_APP_BACKEND}/history/add`,
       data: {
         buyer: localStorage.getItem("username"),
@@ -62,20 +53,22 @@ const Chartcards = (props) => {
         price: bc
       }
     }).then(response => {
-      fetch(`${process.env.REACT_APP_BACKEND}/history/get`)
+      fetch(`${process.env.REACT_APP_BACKEND}/history/get`, {
+        method: 'GET',
+        headers: { 'x-access-token': storage },
+      })
       fetchCrypto();
     }).catch(error => {
       console.log(error)
     });
   }
 
-
-
   const fetchCrypto = () => {
-    fetch(`${process.env.REACT_APP_BACKEND}/crypto`)
+    fetch(`${process.env.REACT_APP_BACKEND}/crypto`, {
+      method: 'GET',
+      headers: { 'x-access-token': storage },
+    })
   }
-
-
 
   useEffect(() => {
     const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
@@ -89,8 +82,6 @@ const Chartcards = (props) => {
     };
   }, []);
 
-
-
   const onSubmit = (values) => {
     if ((values.amount * bc <= props.balance) && values.option === "purchased") {
       handleTransaction(values)
@@ -102,8 +93,6 @@ const Chartcards = (props) => {
       return null
     }
   };
-
-
 
   return (
     <>
@@ -126,7 +115,6 @@ const Chartcards = (props) => {
                   form.reset();
                 }}
                 >
-
                   <div>
                     <Field
                       className="label"

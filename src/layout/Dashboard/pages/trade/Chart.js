@@ -11,15 +11,14 @@ import {
 import axios from 'axios';
 import socketIO from 'socket.io-client';
 
-
 const Chart = () => {
+  const storage = localStorage.getItem('token');
   const [data, setData] = React.useState([]);
-
-
 
   const handleData = () => {
     axios({
       method: 'get',
+      headers: { 'x-access-token': storage },
       url: `${process.env.REACT_APP_BACKEND}/chart/`,
     }).then(response => {
       const display = response.data.response.slice(-6);
@@ -35,8 +34,6 @@ const Chart = () => {
       console.error(error);
     });
   };
-
-
 
   useEffect(() => {
     const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;

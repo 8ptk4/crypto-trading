@@ -2,9 +2,7 @@ import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import './History.css';
 
-
 const History = (props) => {
-
   return (
     <>
       <div className="history_top">

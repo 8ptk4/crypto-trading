@@ -1,18 +1,21 @@
+import { Route, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router'
+import { Modal } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
-import { Route, Redirect } from 'react-router-dom';
 import socketIO from 'socket.io-client';
 import Navbar from './components/navbar/Navbar';
 import History from './components/History/History';
 import Panel from './components/Panel/Panel';
-
+import Auth from "../../Auth";
 import axios from 'axios';
-
+import jwt_decode from "jwt-decode";
+import Button from 'react-bootstrap/Button';
 import './Dashboard.css';
-
 
 const DashboardRoutes = ({ component: Component, ...rest }) => {
   const [balance, setBalance] = useState(0);
   const [history, setHistory] = React.useState([])
+  const [show, setShow] = useState(false);
   const [holdings, setHoldings] = useState([
     {
       crypto: 'BitCoin',
@@ -23,14 +26,33 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
       amount: 0
     }
   ]);
-
-
-
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const storage = localStorage.getItem('token');
   const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
   const socket = socketIO(ENDPOINT)
+  const historyy = useHistory();
 
+  axios.interceptors.request.use(
+    async config => {
+      let token = localStorage.getItem('token');
+      if (token) {
+        if (checkTokenExpired(token)) {
+          handleShow()
+        }
+      }
+      config.headers['token'] = token;
+      return config;
+  })
 
+  const checkTokenExpired = idToken => {
+    if (idToken) {
+      const decoded = jwt_decode(idToken);
+      if (decoded && decoded['exp']) {
+        return Date.now() - 1000 >= decoded['exp'] * 1000;
+      }
+    }
+  };
 
   useEffect(() => {
     console.log("hej")
@@ -43,9 +65,30 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
     return () => {
       socket.close()
     }
-  }, [])
+  }, []);
 
+  const logout = () => {
+    Auth.signout();
+    historyy.push("/");
+  };
 
+  const refreshToken = async () => {
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_BACKEND}/refresh`,
+      data: {
+        refreshToken: localStorage.getItem("refreshToken"),
+        user: localStorage.getItem("username"),
+      }
+    }).then(response => {
+      console.log(response.data.accessToken);
+      localStorage.setItem('token', response.data.accessToken);
+      handleClose()
+      historyy.go(0)
+    }).catch(error => {
+      console.log("errrroroororororo", error)
+    });
+  };
 
   const fetchBalance = () => {
     axios({
@@ -59,8 +102,6 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
     });
   };
 
-
-
   const fetchHistory = () => {
     axios({
       method: 'get',
@@ -72,8 +113,6 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
       console.log(error);
     });
   };
-
-
 
   const fetchHoldings = () => {
     axios({
@@ -88,46 +127,64 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
   }
 
   useEffect(() => {
-    fetchBalance();
-    fetchHoldings();
-    fetchHistory();
-    
-    console.log("BALANCE: ", balance)
+      fetchBalance()
+      fetchHoldings()
+      fetchHistory()
   }, [storage]);
-
-
 
   if (localStorage.getItem('token')) {
     return (
-      <Route {...rest} render={props => (
-        <section className="main hbox space-between">
-          <nav>
-            <Navbar {...props} />
-          </nav>
-          <article>
-            <Panel {...props}
-              balance={balance}
-              holdings={holdings} 
-            />
-            <Component { ...props }
-              balance={balance}
-              holdings={holdings}
-              history={history}
-              fetchBalance={fetchBalance.bind(this)}
-              fetchHoldings={fetchHoldings.bind(this)}
-            />
-          </article>
-          <aside>
-            <History 
-              history={history}
-            />
-          </aside>
-        </section>
-      )} />
+      <>
+        <Route {...rest} render={props => (
+          <section className="main hbox space-between">
+            <nav>
+              <Navbar {...props} />
+            </nav>
+            <article>
+              <Panel {...props}
+                balance={balance}
+                holdings={holdings} 
+              />
+              <Component { ...props }
+                balance={balance}
+                holdings={holdings}
+                history={history}
+                fetchBalance={fetchBalance.bind(this)}
+                fetchHoldings={fetchHoldings.bind(this)}
+              />
+            </article>
+            <aside>
+              <History 
+                history={history}
+              />
+            </aside>
+            <Modal
+              show={show}
+              onHide={handleClose}
+              backdrop="static"
+              keyboard={false}
+              centered
+              >
+              <Modal.Header closeButton>
+                <Modal.Title>Authenticate token expired.</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Authenticate token expired.
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={logout}>
+                  Logout
+                </Button>
+                <Button variant="primary" onClick={refreshToken}>
+                  Stay logged in
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </section>
+        )} />
+      </>
     );
-  }
-
-  return <Redirect to='/' />;
+  } return <Redirect to='/' />;
 };
 
 export default DashboardRoutes;

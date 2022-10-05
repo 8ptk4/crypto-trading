@@ -3,7 +3,29 @@
   background: rgba(134, 54, 168, 0.95);
   min-height: calc(100% - 70px);
   height: 170px;
+  max-height: calc(100% - 70px);
 }
+
+
+.test_container {
+  height: calc(100% - 70px);
+  background: red;
+  display: flex;
+  flex-direction: column;
+  background: rgba(134, 54, 168, 0.95);
+}
+
+.test_card_container {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+}
+
+.test_chart_container {
+height: 100%;
+overflow-y: hidden;
+}
+
 
 .error_msg {
   color: rgb(124, 65, 65);
@@ -18,14 +40,11 @@
 
 .chart_wrapper {
   height: calc(100% - 240px);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .recharts-surface {
-  height: 100% !important;
+  padding: 40px;
+  width: 100%;
 }
 
 .chartcard_bottom {

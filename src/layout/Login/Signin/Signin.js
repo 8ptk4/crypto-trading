@@ -7,21 +7,7 @@ import axios from 'axios';
 import './Signin.css';
 import Auth from '../../../Auth';
 
-const validate = values => {
-  const errors = {};
-
-  if (!values.email) {
-    errors.email = 'Required';
-  }
-  if (!values.password) {
-    errors.password = 'Required';
-  }
-
-  return errors;
-};
-
 const Signin = (props) => {
-
   const handleSubmit = async values => {
     axios({
       method: 'post',
@@ -29,13 +15,29 @@ const Signin = (props) => {
       data: values
     })
       .then(response => {
-        Auth.authenticate(response.data.hemlighet, response.data.username);
+        Auth.authenticate(
+          response.data.accessToken,
+          response.data.refreshToken, 
+          response.data.username
+        );
         props.history.push('/dashboard/trade');
-        // window.location.reload();
       })
       .catch(error => {
         console.log(error);
       });
+  };
+
+  const validate = values => {
+    const errors = {};
+  
+    if (!values.email) {
+      errors.email = 'Required';
+    }
+    if (!values.password) {
+      errors.password = 'Required';
+    }
+  
+    return errors;
   };
 
   return (

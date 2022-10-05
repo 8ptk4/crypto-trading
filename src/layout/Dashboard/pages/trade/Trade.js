@@ -3,13 +3,12 @@ import ChartcardBc from './ChartcardBc';
 import ChartcardBtc from './ChartcardBtc';
 import Chart from './Chart';
 import './Trade.css';
-import { Container, Col, Row } from 'react-bootstrap';
 
 const Trade = (props) => {
   return (
     <>
-      <Container className="chartcard_container" fluid>
-        <Row className="chartcard_row">
+      <div className="test_container">
+        <div className="test_card_container">
           <ChartcardBtc
             balance={props.balance}
             history={props.history}
@@ -28,15 +27,12 @@ const Trade = (props) => {
             fetchHoldings={props.fetchHoldings}
             fetchBalance={props.fetchBalance}
             fetchCrypto={props.fetchCrypto}
-            />
-        </Row>
-
-        <Row className="chart_wrapper">
-          <Col sx={12} className="chart_wrapper">
-            <Chart />
-          </Col>
-        </Row>
-      </Container>
+          />
+        </div>
+        <div className="test_chart_container">
+          <Chart />
+        </div>
+      </div>
     </>
   );
 };

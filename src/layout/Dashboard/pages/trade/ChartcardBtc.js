@@ -6,18 +6,10 @@ import { Button } from '@material-ui/core';
 import { Col, Modal } from 'react-bootstrap';
 import socketIO from 'socket.io-client';
 
-
-
 const Chartcards = (props) => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const storage = localStorage.getItem('token');
   const [btc, setBtc] = useState(0);
-  
-
-
   const parse = value => (isNaN(parseFloat(value)) ? "" : parseFloat(value));
-  const required = value => (value ? undefined : 'Required')
   const sellError = value => (value <= props.holdings[0].amount ? 
     undefined : 
     `Can sell ${props.holdings[0].amount}`
@@ -27,11 +19,10 @@ const Chartcards = (props) => {
     `Can buy ${Math.floor(props.balance / btc)}`
   );
 
-
-
   const handleTransaction = (values) => {
     axios({
       method: 'post',
+      headers: { 'x-access-token': storage },
       url: `${process.env.REACT_APP_BACKEND}/holdings/transaction`,
       data: {
         price: btc,
@@ -49,11 +40,10 @@ const Chartcards = (props) => {
     });
   };
 
-
-
   const handleHistory = (values) => {
     axios({
       method: "post",
+      headers: { 'x-access-token': storage },
       url: `${process.env.REACT_APP_BACKEND}/history/add`,
       data: {
         buyer: localStorage.getItem("username"),
@@ -63,20 +53,22 @@ const Chartcards = (props) => {
         price: btc
       }
     }).then(response => {
-      fetch(`${process.env.REACT_APP_BACKEND}/history/get`)
+      fetch(`${process.env.REACT_APP_BACKEND}/history/get`, {
+        method: 'GET',
+        headers: { 'x-access-token': storage },
+      })
       fetchCrypto();
     }).catch(error => {
       console.log(error)
     });
   }
 
-
-
   const fetchCrypto = () => {
-    fetch(`${process.env.REACT_APP_BACKEND}/crypto`)
+    fetch(`${process.env.REACT_APP_BACKEND}/crypto`, {
+      method: 'GET',
+      headers: { 'x-access-token': storage },
+    })
   }
-
-
 
   useEffect(() => {
     const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
@@ -90,8 +82,6 @@ const Chartcards = (props) => {
     };
   }, []);
 
-
-
   const onSubmit = async (values) => {
     if ((values.amount * btc <= props.balance) && values.option === "purchased") {
       handleTransaction(values)
@@ -102,30 +92,10 @@ const Chartcards = (props) => {
       handleTransaction(values)
       return null
     }
-    handleShow()
   };
-
-
 
   return (
     <>
-      {/* <Modal show={show} onHide={handleClose} animation={false}>
-        <Modal.Header closeButton>
-          <Modal.Title>Insufficient Founds</Modal.Title>
-        </Modal.Header>
-        <Modal.Body></Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleClose}>
-            Close
-          </Button>
-          <Button onClick={() => {
-            props.history.push('/dashboard/deposit');
-          }}>
-            Add founds
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
-
       <Col sx={6}>
         <div className="chartcard_first">
           <div className="chartcard_top">

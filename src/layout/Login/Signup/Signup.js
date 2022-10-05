@@ -7,35 +7,9 @@ import axios from 'axios';
 import Auth from '../../../Auth';
 import './Signup.css';
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-const validate = values => {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = 'Required';
-  }
-  if (!values.lastName) {
-    errors.lastName = 'Required';
-  }
-  if (!values.email) {
-    errors.email = 'Required';
-  }
-  if (!values.password) {
-    errors.password = 'Required';
-  }
-  if (!values.verifyPassword) {
-    errors.verifyPassword = 'Required';
-  }
-  if (values.password !== values.verifyPassword) {
-    errors.password = 'Passwords doesn\'t match';
-    errors.verifyPassword = 'Passwords doesn\'t match';
-  }
-  return errors;
-};
-
 const Signup = ({ classes, history }) => {
   const [status, setStatus] = useState(' ');
-
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   const handleLogin = async values => {
     axios({
@@ -44,15 +18,37 @@ const Signup = ({ classes, history }) => {
       data: values
     })
       .then(response => {
-        Auth.authenticate(response.data.hemlighet, response.data.username);
+        Auth.authenticate(response.data.accessToken, response.data.username);
         history.push('/dashboard/trade');
-        // window.location.reload();
       })
       .catch(error => {
         console.log(error);
       });
   };
 
+  const validate = values => {
+    const errors = {};
+    if (!values.firstName) {
+      errors.firstName = 'Required';
+    }
+    if (!values.lastName) {
+      errors.lastName = 'Required';
+    }
+    if (!values.email) {
+      errors.email = 'Required';
+    }
+    if (!values.password) {
+      errors.password = 'Required';
+    }
+    if (!values.verifyPassword) {
+      errors.verifyPassword = 'Required';
+    }
+    if (values.password !== values.verifyPassword) {
+      errors.password = 'Passwords doesn\'t match';
+      errors.verifyPassword = 'Passwords doesn\'t match';
+    }
+    return errors;
+  };
 
   const handleSubmit = async values => {
     await sleep(500);
@@ -64,10 +60,6 @@ const Signup = ({ classes, history }) => {
       response => {
         setStatus(response.data.response);
         handleLogin(values);
-
-        // setTimeout(() => {
-        //   history.push("/signin");
-        // }, 1500);
       },
       error => {
         setStatus('Account couldn\'t be created!');

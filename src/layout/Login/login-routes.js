@@ -23,7 +23,6 @@ const LoginRoutes = ({ component: Component, ...rest }) => {
   }
 
   return <Redirect to='/dashboard/trade' />;
-
 };
 
 export default LoginRoutes;

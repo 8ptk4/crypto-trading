@@ -1,21 +1,12 @@
 import React from 'react';
-
-// Bootstrap
 import { Link } from 'react-router-dom';
-
-// Material Design icons
 import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
 import RemoveFromQueueIcon from '@material-ui/icons/RemoveFromQueue';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
-
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-
-// Authentication
 import Auth from '../../../../Auth';
-
-// Styles
 import './Navbar.css';
 
 const Menu = ({ history }) => {
@@ -41,15 +32,6 @@ const Menu = ({ history }) => {
               <span className="navbar_items">TRADE</span>
             </Link>
 
-            <Link className="link" to="/dashboard/wallet">
-              <span className="navbar_items">
-                <AccountBalanceWalletOutlinedIcon
-                  fontSize="large"
-                  className="icon" />
-              </span>
-              <span className="navbar_items">WALLET</span>
-            </Link>
-
             <Link className="link" to="/dashboard/deposit">
               <span className="navbar_items">
                 <RemoveFromQueueIcon
@@ -64,7 +46,6 @@ const Menu = ({ history }) => {
               <span className="link" onClick={() => {
                 Auth.signout();
                 history.push('/');
-                // window.location.reload()
               }}>
                 <span
                   className="navbar_items"

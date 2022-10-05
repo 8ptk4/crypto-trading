@@ -5,29 +5,15 @@ import { Grid, Button } from '@material-ui/core';
 import axios from 'axios';
 import './Deposit.css';
 
-const validate = values => {
-  const errors = {};
-
-  if (!values.amount) {
-    errors.amount = 'Required';
-  }
-
-  if (values.amount <= 0) {
-    errors.amount = 'Amount must be bigger than 0';
-  }
-
-  return errors;
-};
-
-
-
 const Deposit = (props) => {
   const [status, setStatus] = useState('');
-
+  const storage = localStorage.getItem('token');
+  
   const onSubmit = (values) => {
     return new Promise(resolve => {
       axios({
         method: 'post',
+        headers: { 'x-access-token': storage },
         url: `${process.env.REACT_APP_BACKEND}/wallet/deposit`,
         data: {
           amount: values.amount,
@@ -45,7 +31,19 @@ const Deposit = (props) => {
     });
   };
 
-
+  const validate = values => {
+    const errors = {};
+    
+    if (!values.amount) {
+      errors.amount = 'Required';
+    }
+    
+    if (values.amount <= 0) {
+      errors.amount = 'Amount must be bigger than 0';
+    }
+    
+    return errors;
+  };
 
   return (
     <div className="deposit_wrapper">
