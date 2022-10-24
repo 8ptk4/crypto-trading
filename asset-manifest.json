@@ -5,8 +5,8 @@
     "static/js/1.39611774.chunk.js": "/crypto-trading/static/js/1.39611774.chunk.js",
     "static/js/1.39611774.chunk.js.map": "/crypto-trading/static/js/1.39611774.chunk.js.map",
     "main.css": "/crypto-trading/static/css/main.ecedf9f6.chunk.css",
-    "main.js": "/crypto-trading/static/js/main.37f77cd9.chunk.js",
-    "main.js.map": "/crypto-trading/static/js/main.37f77cd9.chunk.js.map",
+    "main.js": "/crypto-trading/static/js/main.edffd7da.chunk.js",
+    "main.js.map": "/crypto-trading/static/js/main.edffd7da.chunk.js.map",
     "runtime-main.js": "/crypto-trading/static/js/runtime-main.81a4aeb0.js",
     "runtime-main.js.map": "/crypto-trading/static/js/runtime-main.81a4aeb0.js.map",
     "static/js/4.992e6cea.chunk.js": "/crypto-trading/static/js/4.992e6cea.chunk.js",
@@ -31,7 +31,7 @@
     "static/js/11.710fdd42.chunk.js": "/crypto-trading/static/js/11.710fdd42.chunk.js",
     "static/js/11.710fdd42.chunk.js.map": "/crypto-trading/static/js/11.710fdd42.chunk.js.map",
     "index.html": "/crypto-trading/index.html",
-    "precache-manifest.71f2f23b2c8e6736e1b86e1cea11cb68.js": "/crypto-trading/precache-manifest.71f2f23b2c8e6736e1b86e1cea11cb68.js",
+    "precache-manifest.081234c96546ba74375e7572db06164b.js": "/crypto-trading/precache-manifest.081234c96546ba74375e7572db06164b.js",
     "service-worker.js": "/crypto-trading/service-worker.js",
     "static/css/5.9836a823.chunk.css.map": "/crypto-trading/static/css/5.9836a823.chunk.css.map",
     "static/css/6.2c99234c.chunk.css.map": "/crypto-trading/static/css/6.2c99234c.chunk.css.map",
@@ -48,6 +48,6 @@
     "static/css/5.9836a823.chunk.css",
     "static/js/5.239c698f.chunk.js",
     "static/css/main.ecedf9f6.chunk.css",
-    "static/js/main.37f77cd9.chunk.js"
+    "static/js/main.edffd7da.chunk.js"
   ]
 }
