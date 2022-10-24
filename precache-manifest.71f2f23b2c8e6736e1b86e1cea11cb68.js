@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "31affb8691975c0079fdcda1caa2a86f",
+    "revision": "666d26e34f12140f8518bb44d4f6edee",
     "url": "/crypto-trading/index.html"
   },
   {
@@ -40,8 +40,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/crypto-trading/static/js/10.32925f0a.chunk.js"
   },
   {
-    "revision": "1ed4dcf2a27e4db05bd5",
-    "url": "/crypto-trading/static/js/11.4e521282.chunk.js"
+    "revision": "26c664bcb570ab77b6f3",
+    "url": "/crypto-trading/static/js/11.710fdd42.chunk.js"
   },
   {
     "revision": "823c158f9c1e5fbc4fce",
@@ -80,8 +80,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/crypto-trading/static/js/main.37f77cd9.chunk.js"
   },
   {
-    "revision": "4d1cf66a03d64e7a9780",
-    "url": "/crypto-trading/static/js/runtime-main.65ca6f64.js"
+    "revision": "f20478dc6d05df76e01b",
+    "url": "/crypto-trading/static/js/runtime-main.81a4aeb0.js"
   },
   {
     "revision": "792943c6c3bf1a8a155faef1a508c765",
