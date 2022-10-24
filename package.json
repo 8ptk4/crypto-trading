@@ -21,20 +21,17 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.4",
     "recharts": "^1.8.3",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^4.5.3"
   },
   "scripts": {
     "serve": "react-scripts start --watch",
-    "start": "CHOKIDAR_USEPOLLING=true npm run serve",
-    "lint": "eslint -c eslintrc src; exit 0",
-    "fix": "eslint -c eslintrc src --fix; exit 0",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "prelint": "npm run build --prod",
+    
     "deploy": "npm run build --prod && rsync -av build/* root@puttekarlsson.com:/var/www/puttekarlsson.com/html/"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [

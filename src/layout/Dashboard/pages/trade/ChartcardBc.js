@@ -5,9 +5,12 @@ import { TextField } from 'final-form-material-ui';
 import { Button } from '@material-ui/core';
 import { Col } from 'react-bootstrap';
 import socketIO from 'socket.io-client';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const storage = localStorage.getItem('token');
 
 const Chartcards = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const storage = localStorage.getItem('token');
   const [bc, setBc] = useState(0);
   const parse = value => (isNaN(parseFloat(value)) ? "" : parseFloat(value));
   const sellError = value => (value <= props.holdings[1].amount ? 
@@ -19,10 +22,12 @@ const Chartcards = (props) => {
     `Can buy ${Math.floor(props.balance / bc)}`
   );
 
-  const handleTransaction = (values) => {
-    axios({
+  const handleTransaction = async (values) => {
+    setIsLoading(true);
+
+    await axios({
       method: 'post',
-      headers: { 'x-access-token': storage },
+      headers: { 'x-access-token': localStorage.getItem('token') },
       url: `${process.env.REACT_APP_BACKEND}/holdings/transaction`,
       data: {
         price: bc,
@@ -31,19 +36,16 @@ const Chartcards = (props) => {
         amount: values.amount,
         account: localStorage.getItem('username')
       }
-    }).then(response => {
-      props.fetchHoldings();
-      props.fetchBalance();
-      handleHistory(values);
-    }).catch(error => {
-      console.error(error);
-    });
+    })
+    await props.fetchHoldings();
+    await props.fetchBalance();
+    await handleHistory(values);
   };
 
   const handleHistory = (values) => {
     axios({
       method: "post",
-      headers: { 'x-access-token': storage },
+      headers: { 'x-access-token': localStorage.getItem('token') },
       url: `${process.env.REACT_APP_BACKEND}/history/add`,
       data: {
         buyer: localStorage.getItem("username"),
@@ -52,15 +54,17 @@ const Chartcards = (props) => {
         amount: values.amount,
         price: bc
       }
-    }).then(response => {
-      fetch(`${process.env.REACT_APP_BACKEND}/history/get`, {
+    }).then(() => {
+      axios({
         method: 'GET',
         headers: { 'x-access-token': storage },
+        url: `${process.env.REACT_APP_BACKEND}/history/get`
       })
+    }).then(() => {
       fetchCrypto();
-    }).catch(error => {
-      console.log(error)
-    });
+    }).finally(() => {
+      setIsLoading(false);
+    })
   }
 
   const fetchCrypto = () => {
@@ -73,12 +77,14 @@ const Chartcards = (props) => {
   useEffect(() => {
     const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
     const socket = socketIO(ENDPOINT);
+
     fetchCrypto();
     socket.on('crypto', (data) => {    
       setBc(data[1].value);
     });
+
     return () => {
-      socket.close();
+      socket.off('crypto');
     };
   }, []);
 
@@ -104,6 +110,14 @@ const Chartcards = (props) => {
           </div>
 
           <div className="chartcard_bottom">
+            {isLoading ?    
+                <div className="loadingStyle">
+                  <h6>Transaction in progress... </h6>
+                  <CircularProgress 
+                    size="2rem"
+                    color="lightgray" 
+                    className="loadingIconStyle" />
+                </div> : 
             <Form
               onSubmit={onSubmit}
               allowNegative={false}
@@ -169,7 +183,7 @@ const Chartcards = (props) => {
                   </div>
                 </form>
               )}
-            />
+            />}
           </div>
         </div>
       </Col>

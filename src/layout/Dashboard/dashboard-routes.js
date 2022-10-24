@@ -13,6 +13,10 @@ import Button from 'react-bootstrap/Button';
 import './Dashboard.css';
 
 const DashboardRoutes = ({ component: Component, ...rest }) => {
+  const storage = localStorage.getItem('token');
+  const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
+  const socket = socketIO(ENDPOINT)
+  const historyy = useHistory();
   const [balance, setBalance] = useState(0);
   const [history, setHistory] = React.useState([])
   const [show, setShow] = useState(false);
@@ -28,10 +32,6 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
   ]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const storage = localStorage.getItem('token');
-  const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
-  const socket = socketIO(ENDPOINT)
-  const historyy = useHistory();
 
   axios.interceptors.request.use(
     async config => {
@@ -55,39 +55,18 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
   };
 
   useEffect(() => {
-    console.log("hej")
     socket.on('history', (data) => {
-      console.log("arsle")
       setHistory(prev => [data, ...prev]);
-      console.log("hejsan");
     })
-    
+
     return () => {
-      socket.close()
-    }
+      socket.off('history');
+    };
   }, []);
 
   const logout = () => {
     Auth.signout();
     historyy.push("/");
-  };
-
-  const refreshToken = async () => {
-    axios({
-      method: "post",
-      url: `${process.env.REACT_APP_BACKEND}/refresh`,
-      data: {
-        refreshToken: localStorage.getItem("refreshToken"),
-        user: localStorage.getItem("username"),
-      }
-    }).then(response => {
-      console.log(response.data.accessToken);
-      localStorage.setItem('token', response.data.accessToken);
-      handleClose()
-      historyy.go(0)
-    }).catch(error => {
-      console.log("errrroroororororo", error)
-    });
   };
 
   const fetchBalance = () => {
@@ -102,24 +81,13 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
     });
   };
 
-  const fetchHistory = () => {
-    axios({
-      method: 'get',
-      headers: { 'x-access-token': storage },
-      url: `${process.env.REACT_APP_BACKEND}/history/test`
-    }).then(response => {
-      console.log("apa", response.data)
-    }).catch(error => {
-      console.log(error);
-    });
-  };
-
   const fetchHoldings = () => {
     axios({
       method: "get",
       headers: { 'x-access-token': storage },
       url: `${process.env.REACT_APP_BACKEND}/holdings/show`
     }).then(response => {
+      console.log("VAD HÄNDER", response)
       setHoldings(response.data.row)
     }).catch(error => {
       console.error(error)
@@ -129,7 +97,6 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
   useEffect(() => {
       fetchBalance()
       fetchHoldings()
-      fetchHistory()
   }, [storage]);
 
   if (localStorage.getItem('token')) {
@@ -153,7 +120,7 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
                 fetchHoldings={fetchHoldings.bind(this)}
               />
             </article>
-            <aside>
+            <aside className="historyPanel">
               <History 
                 history={history}
               />
@@ -175,7 +142,7 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
                 <Button variant="secondary" onClick={logout}>
                   Logout
                 </Button>
-                <Button variant="primary" onClick={refreshToken}>
+                <Button variant="primary">
                   Stay logged in
                 </Button>
               </Modal.Footer>

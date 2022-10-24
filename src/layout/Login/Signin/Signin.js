@@ -17,7 +17,6 @@ const Signin = (props) => {
       .then(response => {
         Auth.authenticate(
           response.data.accessToken,
-          response.data.refreshToken, 
           response.data.username
         );
         props.history.push('/dashboard/trade');

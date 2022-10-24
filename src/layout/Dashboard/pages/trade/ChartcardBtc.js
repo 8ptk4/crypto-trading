@@ -5,8 +5,10 @@ import { TextField } from 'final-form-material-ui';
 import { Button } from '@material-ui/core';
 import { Col, Modal } from 'react-bootstrap';
 import socketIO from 'socket.io-client';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Chartcards = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const storage = localStorage.getItem('token');
   const [btc, setBtc] = useState(0);
   const parse = value => (isNaN(parseFloat(value)) ? "" : parseFloat(value));
@@ -19,10 +21,12 @@ const Chartcards = (props) => {
     `Can buy ${Math.floor(props.balance / btc)}`
   );
 
-  const handleTransaction = (values) => {
-    axios({
+  const handleTransaction = async (values) => {
+    setIsLoading(true);
+    
+    await axios({
       method: 'post',
-      headers: { 'x-access-token': storage },
+      headers: { 'x-access-token': localStorage.getItem('token') },
       url: `${process.env.REACT_APP_BACKEND}/holdings/transaction`,
       data: {
         price: btc,
@@ -31,19 +35,16 @@ const Chartcards = (props) => {
         amount: values.amount,
         account: localStorage.getItem('username')
       }
-    }).then(response => {
-      props.fetchHoldings();
-      props.fetchBalance();
-      handleHistory(values);
-    }).catch(error => {
-      console.error(error);
-    });
+    })
+    await props.fetchHoldings();
+    await props.fetchBalance();
+    await handleHistory(values);
   };
 
   const handleHistory = (values) => {
     axios({
       method: "post",
-      headers: { 'x-access-token': storage },
+      headers: { 'x-access-token': localStorage.getItem('token') },
       url: `${process.env.REACT_APP_BACKEND}/history/add`,
       data: {
         buyer: localStorage.getItem("username"),
@@ -52,15 +53,17 @@ const Chartcards = (props) => {
         amount: values.amount,
         price: btc
       }
-    }).then(response => {
-      fetch(`${process.env.REACT_APP_BACKEND}/history/get`, {
+    }).then(() => {
+      axios({
         method: 'GET',
-        headers: { 'x-access-token': storage },
+        headers: { 'x-access-token': localStorage.getItem('token') },
+        url: `${process.env.REACT_APP_BACKEND}/history/get`
       })
+    }).then(() => {
       fetchCrypto();
-    }).catch(error => {
-      console.log(error)
-    });
+    }).finally(() => {
+      setIsLoading(false);
+    })
   }
 
   const fetchCrypto = () => {
@@ -73,12 +76,14 @@ const Chartcards = (props) => {
   useEffect(() => {
     const ENDPOINT = `${process.env.REACT_APP_BACKEND}/`;
     const socket = socketIO(ENDPOINT);
+
     fetchCrypto();
     socket.on('crypto', (data) => {
       setBtc(data[0].value);
     });
+
     return () => {
-      socket.close();
+      socket.off('crypto');
     };
   }, []);
 
@@ -96,82 +101,90 @@ const Chartcards = (props) => {
 
   return (
     <>
-      <Col sx={6}>
-        <div className="chartcard_first">
-          <div className="chartcard_top">
-            <span className="chartcard_title">BitCoin</span>
-            <span className="chartcard_value">{btc} Kr</span>
-          </div>
+      
+        <Col sx={6}>
+          <div className="chartcard_first">
+            <div className="chartcard_top">
+              <span className="chartcard_title">BitCoin</span>
+              <span className="chartcard_value">{btc} Kr</span>
+            </div>
 
-          <div className="chartcard_bottom">
-            <Form
-              onSubmit={onSubmit}
-              render={({ handleSubmit, values, submitting, pristine, form, errors }) => (
-                <form
-                  className="chartcard_form"
-                  onSubmit={ async (values) => {
-                    await handleSubmit(values)
-                    form.reset();
-                  }}
-                >
-
-                  <div>
-                    <Field
-                      className="label"
-                      name="amount"
-                      fullWidth
-                      component={TextField}
-                      type="text"
-                      label="Amount"
-                      autoComplete="off"
-                      parse={parse}
-                    />
-                  </div>
+            <div className="chartcard_bottom">
+              {isLoading ?    
+                <div className="loadingStyle">
+                  <h6>Transaction in progress... </h6>
+                  <CircularProgress 
+                    size="2rem"
+                    color="lightgray" 
+                    className="loadingIconStyle" />
+                </div> : 
+              <Form
+                onSubmit={onSubmit}
+                render={({ handleSubmit, values, submitting, pristine, form, errors }) => (
+                  <form
+                    className="chartcard_form"
+                    onSubmit={ async (values) => {
+                      await handleSubmit(values)
+                      form.reset();
+                    }}
+                  >
                   
-                    { values.amount &&
-                      <div className="error_msg">
-                        <span>{sellError(values.amount)}</span>
-                        <span>{buyError(values.amount)}</span>
-                      </div> 
-                    }
-
-                    <div className="chartcard_buttons">
-                      <span>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className="primary_button"
-                          type="submit"
-                          onClick={() => {
-                            form.change('option', 'sold');
-                          }}
-                          disabled={submitting || pristine || !values.amount || sellError(values.amount)}
-                        >
-                          Sell
-                        </Button>
-                      </span>
-
-                      <span>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className="primary_button"
-                          type="submit"
-                          onClick={() => {
-                            errors = {};
-                            form.change('option', 'purchased');
-                          }}
-                          disabled={submitting || pristine || !values.amount || buyError(values.amount)}
-                        >
-                          Buy
-                        </Button>
-                      </span>
+                    <div>
+                      <Field
+                        className="label"
+                        name="amount"
+                        fullWidth
+                        component={TextField}
+                        type="text"
+                        label="Amount"
+                        autoComplete="off"
+                        parse={parse}
+                      />
                     </div>
-                </form>
-              )}
-            />
+                    
+                      { values.amount &&
+                        <div className="error_msg">
+                          <span>{sellError(values.amount)}</span>
+                          <span>{buyError(values.amount)}</span>
+                        </div> 
+                      }
+                      <div className="chartcard_buttons">
+                        <span>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            className="primary_button"
+                            type="submit"
+                            onClick={() => {
+                              form.change('option', 'sold');
+                            }}
+                            disabled={submitting || pristine || !values.amount || sellError(values.amount)}
+                            >
+                            Sell
+                          </Button>
+                        </span>
+
+                        <span>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            className="primary_button"
+                            type="submit"
+                            onClick={() => {
+                              errors = {};
+                              form.change('option', 'purchased');
+                            }}
+                            disabled={submitting || pristine || !values.amount || buyError(values.amount)}
+                          >
+                            Buy
+                          </Button>
+                        </span>
+                      </div>
+                  </form>
+                )}
+              />}
+            </div>  
           </div>
-        </div>
       </Col>
     </>
   );

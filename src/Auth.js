@@ -1,14 +1,11 @@
 const Auth = {
   isAuthenticated: false,
   token: '',
-  refreshToken: '',
 
-  authenticate(token, refresh, email) {
+  authenticate(token, email) {
     localStorage.setItem('token', token);
-    localStorage.setItem('refreshToken', refresh);
     localStorage.setItem('username', email);
     this.token = token;
-    this.refreshToken = refresh;
     this.isAuthenticated = true;
   },
 

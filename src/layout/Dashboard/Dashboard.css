@@ -103,6 +103,9 @@ nav {
   background: #2f313e;
 }
 
+.test_card_container {
+  flex-direction: row;
+}
 
 @media screen and (max-width: 766px) {
   .hbox {
@@ -163,12 +166,8 @@ nav {
     display: inline !important;
   }
 
-  .chartcard_first {
-    margin-bottom: 15px;
-  }
-
   .chart_wrapper {
-    height: 60% !important;
+    height: 100% !important;
     align-items: flex-start !important;
   }
 
@@ -178,10 +177,6 @@ nav {
 
   .chart_wrapper {
     height:100%;
-  }
-
-  .recharts-responsive-container {
-    height: 70% !important;
   }
   
   .navbar-top {
@@ -205,9 +200,22 @@ nav {
   .navbar-nav {
     flex-direction: column !important;
   }
-
     
   .navbar-top {
     margin-bottom: 0 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .historyPanel {
+    display: none;
+  }
+
+  .chartcard_first {
+    margin-bottom: 15px;
+  }
+
+  .test_card_container {
+    flex-direction: column !important;
   }
 }

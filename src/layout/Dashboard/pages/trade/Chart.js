@@ -41,14 +41,15 @@ const Chart = () => {
 
     socket.on('history', (data) => handleData());
     handleData();
+
     return () => {
-      socket.close();
+      socket.off('history');
     };
   }, []);
 
   return (
     <>
-      <ResponsiveContainer>
+      <ResponsiveContainer width={'99%'} height={'99%'}>
         <AreaChart
           data={data}
           margin={{

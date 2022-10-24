@@ -16,5 +16,7 @@
     "titleBar.inactiveForeground": "#e7e7e799"
   },
   "editor.fontFamily": "'Fira Code','Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
-  "peacock.remoteColor": "#0c1832"
+  "peacock.remoteColor": "#0c1832",
+  "appService.defaultWebAppToDeploy": "/subscriptions/a7cbb7c2-3d01-4d2f-a597-ad6557d730bd/AppServices/subscriptions/a7cbb7c2-3d01-4d2f-a597-ad6557d730bd/resourceGroups/DIDA-PAKA17-DV1612-H22-LP1/providers/Microsoft.Web/sites/jsramverk-paka17-react",
+  "appService.deploySubpath": "./build"
 }
