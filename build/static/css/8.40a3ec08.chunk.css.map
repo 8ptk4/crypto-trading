@@ -1,1 +1,0 @@
-{"version":3,"sources":["/home/patrik/School/jsramverk-new/crypto-trading/src/layout/Dashboard/pages/Deposit/Deposit.css"],"names":[],"mappings":"AAAA,iBACE,YAAa,CACb,+BAAoC,CACpC,4BACF","file":"8.40a3ec08.chunk.css","sourcesContent":[".deposit_wrapper {\n  padding: 20px;\n  background: rgba(134, 54, 168, 0.98);\n  min-height: calc(100% - 70px);\n}"]}
