@@ -30,8 +30,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prelint": "npm run build --prod",
-    
-    "deploy": "npm run build --prod && rsync -av build/* root@puttekarlsson.com:/var/www/puttekarlsson.com/html/"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
