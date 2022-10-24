@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "49af63df2b2230d7f410f9696319a2e2",
+    "revision": "91c16964e2e0eeb4c287051aa1691ae9",
     "url": "/crypto-trading/index.html"
   },
   {
-    "revision": "d912a8df94ec2821f52b",
+    "revision": "a946167b9e750f79771e",
     "url": "/crypto-trading/static/css/5.9836a823.chunk.css"
   },
   {
@@ -24,7 +24,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/crypto-trading/static/css/9.d596b238.chunk.css"
   },
   {
-    "revision": "cf08a655b9a141ff80aa",
+    "revision": "5a17483031a9bfaba325",
     "url": "/crypto-trading/static/css/main.ecedf9f6.chunk.css"
   },
   {
@@ -40,8 +40,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/crypto-trading/static/js/10.32925f0a.chunk.js"
   },
   {
-    "revision": "26c664bcb570ab77b6f3",
-    "url": "/crypto-trading/static/js/11.710fdd42.chunk.js"
+    "revision": "a6f59121571b0b7e45e4",
+    "url": "/crypto-trading/static/js/11.373f9999.chunk.js"
   },
   {
     "revision": "823c158f9c1e5fbc4fce",
@@ -52,12 +52,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/crypto-trading/static/js/4.992e6cea.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "d912a8df94ec2821f52b",
-    "url": "/crypto-trading/static/js/5.239c698f.chunk.js"
+    "revision": "a946167b9e750f79771e",
+    "url": "/crypto-trading/static/js/5.52ec0390.chunk.js"
   },
   {
     "revision": "1635ba17866445e1e9fe30dc12f6dca2",
-    "url": "/crypto-trading/static/js/5.239c698f.chunk.js.LICENSE.txt"
+    "url": "/crypto-trading/static/js/5.52ec0390.chunk.js.LICENSE.txt"
   },
   {
     "revision": "936deeaee19a8620b098",
@@ -76,12 +76,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/crypto-trading/static/js/9.c8b61158.chunk.js"
   },
   {
-    "revision": "cf08a655b9a141ff80aa",
-    "url": "/crypto-trading/static/js/main.edffd7da.chunk.js"
+    "revision": "5a17483031a9bfaba325",
+    "url": "/crypto-trading/static/js/main.b66ad127.chunk.js"
   },
   {
-    "revision": "f20478dc6d05df76e01b",
-    "url": "/crypto-trading/static/js/runtime-main.81a4aeb0.js"
+    "revision": "97b088648abc9a9b5aa2",
+    "url": "/crypto-trading/static/js/runtime-main.252be084.js"
   },
   {
     "revision": "792943c6c3bf1a8a155faef1a508c765",
