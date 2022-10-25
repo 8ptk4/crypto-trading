@@ -87,7 +87,6 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
       headers: { 'x-access-token': storage },
       url: `${process.env.REACT_APP_BACKEND}/holdings/show`
     }).then(response => {
-      console.log("VAD HÄNDER", response)
       setHoldings(response.data.row)
     }).catch(error => {
       console.error(error)
@@ -101,55 +100,53 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
 
   if (localStorage.getItem('token')) {
     return (
-      <>
-        <Route {...rest} render={props => (
-          <section className="main hbox space-between">
-            <nav>
-              <Navbar {...props} />
-            </nav>
-            <article>
-              <Panel {...props}
-                balance={balance}
-                holdings={holdings} 
-              />
-              <Component { ...props }
-                balance={balance}
-                holdings={holdings}
-                history={history}
-                fetchBalance={fetchBalance.bind(this)}
-                fetchHoldings={fetchHoldings.bind(this)}
-              />
-            </article>
-            <aside className="historyPanel">
-              <History 
-                history={history}
-              />
-            </aside>
-            <Modal
-              show={show}
-              onHide={handleClose}
-              backdrop="static"
-              keyboard={false}
-              centered
-              >
-              <Modal.Header closeButton>
-                <Modal.Title>Authenticate token expired.</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                Authenticate token expired.
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={logout}>
-                  Logout
-                </Button>
-                <Button variant="primary">
-                  Stay logged in
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          </section>
-        )} />
-      </>
+      <Route {...rest} render={props => (
+        <section className="main hbox space-between">
+          <nav>
+            <Navbar {...props} />
+          </nav>
+          <article>
+            <Panel {...props}
+              balance={balance}
+              holdings={holdings} 
+            />
+            <Component { ...props }
+              balance={balance}
+              holdings={holdings}
+              history={history}
+              fetchBalance={fetchBalance.bind(this)}
+              fetchHoldings={fetchHoldings.bind(this)}
+            />
+          </article>
+          <aside className="historyPanel">
+            <History 
+              history={history}
+            />
+          </aside>
+          <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+            centered
+            >
+            <Modal.Header closeButton>
+              <Modal.Title>Authenticate token expired.</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Authenticate token expired.
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={logout}>
+                Logout
+              </Button>
+              <Button variant="primary">
+                Stay logged in
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </section>
+      )} />
     );
   } return <Redirect to='/' />;
 };

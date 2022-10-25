@@ -1,5 +1,4 @@
 {
-  "homepage": "https://8ptk4.github.io/crypto-trading/",
   "name": "crypto-trading",
   "version": "0.1.0",
   "private": true,
@@ -27,12 +26,11 @@
   "scripts": {
     "serve": "react-scripts start --watch",
     "start": "react-scripts start",
+    "lint": "eslint -c eslintrc src; exit 0",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prelint": "npm run build --prod",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "npm run build && rsync -av --delete build/ paka17@ssh.student.bth.se:www/crypto"
   },
   "browserslist": {
     "production": [
@@ -45,8 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^4.0.0"
   }
 }

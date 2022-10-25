@@ -25,11 +25,11 @@ const App = () => {
           </div>
         }>
           <Switch>
-            <LoginRoutes path="/" exact component={Index} />
             <LoginRoutes path="/signup" component={Signup} />
             <LoginRoutes path="/signin" component={Signin} />
             <DashboardRoutes path="/dashboard/trade" component={Trade} />
             <DashboardRoutes path="/dashboard/deposit" component={Deposit} />
+            <LoginRoutes path="/" component={Index} />
             <Route component={NoMatch} />
           </Switch>
         </Suspense>

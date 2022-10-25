@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { TextField } from 'final-form-material-ui';
 import { Grid, Button } from '@material-ui/core';
@@ -8,6 +8,8 @@ import './Signin.css';
 import Auth from '../../../Auth';
 
 const Signin = (props) => {
+  const [err, setErr] = useState('');
+
   const handleSubmit = async values => {
     axios({
       method: 'post',
@@ -22,7 +24,7 @@ const Signin = (props) => {
         props.history.push('/dashboard/trade');
       })
       .catch(error => {
-        console.log(error);
+        setErr(error.response.data);
       });
   };
 
@@ -81,6 +83,7 @@ const Signin = (props) => {
                   />
                 </Grid>
                 <Grid item={true} xs={6}>
+                  {err}
                   <Button
                     variant="contained"
                     color="primary"
