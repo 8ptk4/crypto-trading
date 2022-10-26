@@ -23,8 +23,9 @@ const Chart = () => {
     }).then(response => {
       const display = response.data.response.slice(-6);
       const chart_data = display.map((data) => {
+        const time = new Date(data.date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false});
         return {
-          date: data.date.split(' ')[1],
+          date: time,
           btc: data.btc,
           bc: data.bc
         }; 
